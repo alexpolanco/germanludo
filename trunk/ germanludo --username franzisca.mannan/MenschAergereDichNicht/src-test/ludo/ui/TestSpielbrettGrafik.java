@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import ludo.domainmodel.spieler.SpielerFarbe;
-import ludo.domainmodel.spieler.Spielfigur;
+import ludo.domainmodel.spieler.Counter;
 import ludo.ui.SpielbrettGrafik;
 
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class TestSpielbrettGrafik {
 	public void moveSpielfigur()
 	{	
 		//Erzeuge Spielfigur
-		Spielfigur figur = new Spielfigur(365, 15, 365, 15, null,
+		Counter figur = new Counter(365, 15, 365, 15, null,
 				SpielerFarbe.ROT, new ImageIcon(SpielbrettGrafik.getInstance()
 						.getImageOrdnerPfad()
 						+ "spielerRot.png"));

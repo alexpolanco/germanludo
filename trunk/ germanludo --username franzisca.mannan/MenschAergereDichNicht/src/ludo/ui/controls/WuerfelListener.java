@@ -3,9 +3,9 @@ package ludo.ui.controls;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ludo.domainmodel.spielbrett.Spielbrett;
-import ludo.domainmodel.spieler.Spielfigur;
-import ludo.main.SpielManager;
+import ludo.domainmodel.manager.SpielManager;
+import ludo.domainmodel.spielbrett.GameBoard;
+import ludo.domainmodel.spieler.Counter;
 import ludo.ui.SpielbrettGrafik;
 
 /**
@@ -27,7 +27,7 @@ public class WuerfelListener implements ActionListener {
 			//Wenn der Spieler keine Figur draußen hat und es sich nicht um eine 6 handelt, wechsel den aktiven Spieler
 			if(Integer.valueOf(SpielbrettGrafik.getInstance().getWuerfelWert()) < 6)
 			{
-				if(SpielManager.getInstance().getAktiverSpieler().hasAktiveSpielfiguren())
+				if(SpielManager.getInstance().getAktiverSpieler().hasActiveCounters())
 				{
 					System.out.println("Der aktive Spieler hat mindestens eine Figur auf dem Feld - bitte wählen sie ihren Zug.");
 				}
@@ -44,7 +44,7 @@ public class WuerfelListener implements ActionListener {
 			else if(Integer.valueOf(SpielbrettGrafik.getInstance().getWuerfelWert()) == 6)
 			{
 				//Wenn es eine 6 war und noch keine Figur draußen ist, setze automatisch eine Figur aufs Startfeld
-				if(!SpielManager.getInstance().getAktiverSpieler().hasAktiveSpielfiguren())
+				if(!SpielManager.getInstance().getAktiverSpieler().hasActiveCounters())
 				{
 					System.out.println("Eine 6 wurde gewürfelt - Figur wird automatisch auf Start gesetzt.");
 					SpielManager.getInstance().getAktiverSpieler().getSpielFiguren().getFirst().setzeSpielfigurAufStart();

@@ -6,141 +6,76 @@ import java.util.NoSuchElementException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import ludo.domainmodel.Kollision;
 import ludo.domainmodel.Koordinate;
 import ludo.domainmodel.PlayerOwned;
+import ludo.domainmodel.manager.SpielManager;
 import ludo.domainmodel.spielbrett.Bewegungsrichtung;
 import ludo.domainmodel.spielbrett.FeldTyp;
 import ludo.domainmodel.spielbrett.InvalidIndexException;
-import ludo.domainmodel.spielbrett.Spielbrett;
-import ludo.domainmodel.spielbrett.Spielfeld;
-import ludo.main.SpielManager;
+import ludo.domainmodel.spielbrett.GameBoard;
+import ludo.domainmodel.spielbrett.GameField;
 import ludo.ui.SpielbrettGrafik;
 import ludo.ui.controls.FigurenListener;
 
 
 /**
  * 
- * Auf was für einem Feld isch die Spielfigur gerade befindet lässt sich über die aktuelle Position und
- * den jeweiligen Feldtyp an dieser Position ermitteln. 
+ * A Counter is moved around on the {@link GameBoard}. Each {@link Counter} is owned by a {@link Player}.
  *
  */
-public class Spielfigur implements PlayerOwned {
-	
-	public void setXPosition(int position) {
-		xPosition = position;
-	}
-
-	public void setYPosition(int position) {
-		yPosition = position;
-	}
-
-	//Position der Spielfigur auf dem Startfeld
-	private int xPositionStartfeld;
-	private int yPositionStartfeld;	
+public class Counter {
 		
-	//Ursprüngliche Position der Spielfigur in dem Startbereich
-	private int xPositionStartBereich;
-	private int yPositionStartBereich;	
+	//Original position of the counter in the starting zone
+	private int xStartingZone;
+	private int yStartingZone;	
 	
-	//aktuelle Position der Spielfigur auf einem Koordinatenfeld
+	//Current position of the counter on the GameBoard
 	private int xPosition;
 	private int yPosition;
 	
-	//Die Spielfigur wei� wer ihr Besitzer ist - also welcher Spieler (falls eure Spielerklasse anders hei�t
-	//passt ihr es halt an ;-)
-	private Spieler besitzer;
+	//Player who owns this counter
+	private Player owningPlayer;
 	
-	private SpielerFarbe figurenFarbe;
+	//Color of this counter
+	private SpielerFarbe counterColor;
 
-	//Das Abbild unserer Spielfigur
-	private JLabel spielFigurGrafik;
+	//The actual image of our player, wrapped in a JLabel
+	private JLabel playerImage;
 	
-	//Der Konstruktor der Spielfigur-Klasse - hier initialisiert man alles was man evtl. braucht
-	//Vielleicht noch die Farbe der Spielfigur speichern oder was ihr halt sonst noch so an Infos braucht
-	public Spielfigur(int x, int y, int xStartfeld, int yStartfeld, Spieler besitzer, SpielerFarbe farbe, ImageIcon icon)
-	{
-		xPositionStartfeld = xStartfeld;
-		yPositionStartfeld = yStartfeld;
-		
-		xPositionStartBereich = xPosition = x;
-		yPositionStartBereich = yPosition = y;
-
-		this.besitzer = besitzer;
-		
-		spielFigurGrafik = new JLabel(icon);
-		spielFigurGrafik.addMouseListener(new FigurenListener());
-		figurenFarbe = farbe;
-	}	
-	
-	public Spieler getBesitzer ()
-	{
-		return besitzer;
-	}
-
-	public void setBesitzer(Spieler neuerBesitzer) {
-		besitzer = neuerBesitzer;		
-	}
-
-	public int getXPosition() {
-		return xPosition;
-	}
-
-	public int getYPosition() {
-		return yPosition;
-	}
-
-	public int getXPositionStartBereich() {
-		return xPositionStartBereich;
-	}
-
-	public int getYPositionStartBereich() {
-		return yPositionStartBereich;
-	}
-	
-	public int getXPositionStartfeld() {
-		return xPositionStartfeld;
-	}
-
-	public int getYPositionStartfeld() {
-		return yPositionStartfeld;
-	}
-
-	public SpielerFarbe getFigurenFarbe() {
-		return figurenFarbe;
-	}
+	//True if the counter is on the GameBoard, actively participating in the game, false otherwise
+	private boolean isActive;
 
 	/**
-	 * Bewegt eine Spielfigur von einem Punkt zum nächsten und aktualisiert auch
-	 * die Grafik entsprechend.
+	 * Creates a new Counter which is owned by a {@link Player}.
 	 * 
-	 * @param position x und y Koordinate der neuen Position
+	 * @param x the x coordinate in the starting zone
+	 * @param y the y coordinate in the starting zone
+	 * @param owner {@link Player} who owns this {@link Counter}
+	 * @param color
+	 * @param icon
 	 */
-	private void setNewPosition(int x, int y) {
-		//aktualisiere Koordinaten
-		xPosition = x;
-		yPosition = y;
-		
-		//TODO zeichne Position der Figur neu
-				
-	}
-	
-	public JLabel getSpielfigurGrafik()
+	public Counter(int x, int y, Player owner, SpielerFarbe color, ImageIcon icon)
 	{
-		return spielFigurGrafik;
-	}
+		owningPlayer = owner;		
+		counterColor = color;
+		xStartingZone = xPosition = x;
+		yStartingZone = yPosition = y;		
+		playerImage = new JLabel(icon);
+		//Add a listener so we can react when a user clicks on a player
+		playerImage.addMouseListener(new FigurenListener());
+	}	
+	
 	
 	/**
 	 * Setzte eine Spielfigur zurück in den Startbereich (bspw. wenn sie geschlagen wurde).
 	 */
-	public void setzeSpielfigurInDenStartbereich()
+	public void placeCounterInStartingZone()
 	{		
-		//Resette die Spielfeldpositionen
-		xPosition = xPositionStartBereich; 
-		yPosition = yPositionStartBereich;
-		
-		//Zeichne Standort der Spielfigur neu
-		SpielbrettGrafik.getInstance().zeichneSpielfigur(this);
+		//TODO superfluent, - can be substituted by other methods.
+		throw new NotImplementedException();
 	}
 	
 	/**
@@ -150,7 +85,7 @@ public class Spielfigur implements PlayerOwned {
 	public void setzeSpielfigurAufStart()
 	{
 		//Nach Kollisionen schauen
-		Spielfigur kollisionsFigur = berechneKollisionViaCoordinates(
+		Counter kollisionsFigur = berechneKollisionViaCoordinates(
 				getXPositionStartfeld(), getYPositionStartfeld());
 		
 		if(kollisionsFigur != null)
@@ -177,17 +112,17 @@ public class Spielfigur implements PlayerOwned {
 				System.out.println("Entferne Spielfigur "
 						+ kollisionsFigur.getFigurenFarbe()
 						+ " vom Feld mit der PositionsID "
-						+ Spielbrett.getInstance().getSpielfeldForSpielfigur(
+						+ GameBoard.getInstance().getSpielfeldForSpielfigur(
 								kollisionsFigur));
 				
-				Spielbrett.getInstance().getSpielfeldForSpielfigur(kollisionsFigur).setNichtBesetzt();
+				GameBoard.getInstance().getSpielfeldForSpielfigur(kollisionsFigur).setNichtBesetzt();
 			}									
 		}
 		//Aktualisiere Koordinaten die zum Zeichnen verwendet werden
 		setNewPosition(getXPositionStartfeld(), getYPositionStartfeld());
 		
 		//Aktualisiere die Feldinformationen des Startfeldes
-		Spielbrett.getInstance().getSpielbrett(this.getFigurenFarbe()).get(0).setBesetztVon(this);
+		GameBoard.getInstance().getSpielbrett(this.getFigurenFarbe()).get(0).setBesetztVon(this);
 
 		System.out.println("Spielfigur wird auf Start gesetzt");
 		
@@ -205,7 +140,7 @@ public class Spielfigur implements PlayerOwned {
 	 */
 	public void bewegeSpielfigur (int wuerfelZahl)
 	{		
-		Spielfeld feld = Spielbrett.getInstance().getSpielfeldForSpielfigur(this);
+		GameField feld = GameBoard.getInstance().getSpielfeldForSpielfigur(this);
 				
 		//Prüfen, ob man über das 44 Feld hinaus gehen würde
 		if(feld != null && feld.getPositionsID()+wuerfelZahl > 44)
@@ -221,7 +156,7 @@ public class Spielfigur implements PlayerOwned {
 			Koordinate zielPunkt = simulateSpielfigurenMove(wuerfelZahl);
 
 			//Nach Kollisionen schauen
-			Spielfigur kollisionsFigur = berechneKollisionViaCoordinates(zielPunkt.getX(), zielPunkt.getY());
+			Counter kollisionsFigur = berechneKollisionViaCoordinates(zielPunkt.getX(), zielPunkt.getY());
 			
 		
 			if(kollisionsFigur != null)
@@ -244,7 +179,7 @@ public class Spielfigur implements PlayerOwned {
 							+ kollisionsFigur.getFigurenFarbe() + " wurde geschlagen.");
 					
 					//Das Feld auf dem sie stand leeren
-					Spielbrett.getInstance().getSpielfeldForSpielfigur(kollisionsFigur).setNichtBesetzt();
+					GameBoard.getInstance().getSpielfeldForSpielfigur(kollisionsFigur).setNichtBesetzt();
 
 					//Die Kollision fand mit einer anderen Spielfigur statt - entferne diese vom Spielbrett
 					kollisionsFigur.setzeSpielfigurInDenStartbereich();
@@ -281,7 +216,7 @@ public class Spielfigur implements PlayerOwned {
 	{
 		
 		//aktuelles Feld feststellen
-		Spielfeld aktuellesFeld = Spielbrett.getInstance().getSpielfeldForSpielfigur(this);
+		GameField aktuellesFeld = GameBoard.getInstance().getSpielfeldForSpielfigur(this);
 		
 		if(aktuellesFeld.getRichtungZuFolgeFeld() == Bewegungsrichtung.LINKS)
 		{
@@ -301,13 +236,13 @@ public class Spielfigur implements PlayerOwned {
 		}
 
 		//Hole das Spielfeld, was kommt nach dem Feld auf dem unsere Figur stand
-		Spielfeld neuesFeld = Spielbrett.getInstance().getSpielbrett(this.getFigurenFarbe()).get(aktuellesFeld.getPositionsID());
+		GameField neuesFeld = GameBoard.getInstance().getSpielbrett(this.getFigurenFarbe()).get(aktuellesFeld.getPositionsID());
 		
 		//Spielerdaten vom vorherhigen Feld löschen
-		Spielbrett.getInstance().getSpielfeldForSpielfigur(this).setNichtBesetzt();
+		GameBoard.getInstance().getSpielfeldForSpielfigur(this).setNichtBesetzt();
 
 		//Spieldaten auf dem neuen Feld aktualisieren
-		if( Spielbrett.getInstance().getSpielbrett(getFigurenFarbe()).contains(neuesFeld) )
+		if( GameBoard.getInstance().getSpielbrett(getFigurenFarbe()).contains(neuesFeld) )
 		{
 			neuesFeld.setBesetztVon(this);			
 		}
@@ -328,10 +263,10 @@ public class Spielfigur implements PlayerOwned {
 		Koordinate zielPunkt = new Koordinate(getXPosition() ,getYPosition());
 		
 		//Bestimmte das Spielbrett der Figur
-		LinkedList<Spielfeld> brett = Spielbrett.getInstance().getSpielbrett(this.getFigurenFarbe());
+		LinkedList<GameField> brett = GameBoard.getInstance().getSpielbrett(this.getFigurenFarbe());
 
 		//Bestimme das aktuelle Spielfeld der Figur
-		Spielfeld aktuellesFeld = Spielbrett.getInstance().getSpielfeldForSpielfigur(this);
+		GameField aktuellesFeld = GameBoard.getInstance().getSpielfeldForSpielfigur(this);
 		
 		while(wuerfelZahl > 0)
 		{
@@ -377,29 +312,29 @@ public class Spielfigur implements PlayerOwned {
 		{
 			// Prüfe die aktuelle Figurenfarbe und anhand dessen entscheide
 			// welche anderen Felder geprüft werden müssen
-			switch(figurenFarbe)
+			switch(counterColor)
 			{
 				case ROT:
 				{
 					System.out.println("Prüfe Kollisionen mit dem roten Spieler");
 					//Prüfe das blaue Brett
-					kollision = Spielbrett.getInstance().collisionDetection(
-						Spielbrett.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 30);
+					kollision = GameBoard.getInstance().collisionDetection(
+						GameBoard.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 30);
 					if(kollision == null)
 					{
 						//Prüfe das gelbe Brett
-						kollision = Spielbrett.getInstance().collisionDetection(
-							Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 20);
+						kollision = GameBoard.getInstance().collisionDetection(
+							GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 20);
 						if(kollision == null)
 						{
 							//Prüfe das gruene Brett
-							kollision = Spielbrett.getInstance().collisionDetection(
-								Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 10);							
+							kollision = GameBoard.getInstance().collisionDetection(
+								GameBoard.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 10);							
 							if(kollision == null)
 							{
 								//Prüfe das rote Brett
-								kollision = Spielbrett.getInstance().collisionDetection(
-									Spielbrett.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 0);													
+								kollision = GameBoard.getInstance().collisionDetection(
+									GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 0);													
 							}							
 						}
 					}						
@@ -408,20 +343,20 @@ public class Spielfigur implements PlayerOwned {
 				{
 					System.out.println("Prüfe Kollisionen mit dem blauen Spieler");
 					
-					kollision = Spielbrett.getInstance().collisionDetection(
-						Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 30);
+					kollision = GameBoard.getInstance().collisionDetection(
+						GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 30);
 					if(kollision == null)
 					{
-						kollision = Spielbrett.getInstance().collisionDetection(
-							Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 20);
+						kollision = GameBoard.getInstance().collisionDetection(
+							GameBoard.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 20);
 						if(kollision == null)
 						{
-							kollision = Spielbrett.getInstance().collisionDetection(
-								Spielbrett.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 10);							
+							kollision = GameBoard.getInstance().collisionDetection(
+								GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 10);							
 							if(kollision == null)
 							{
-								kollision = Spielbrett.getInstance().collisionDetection(
-									Spielbrett.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 0);													
+								kollision = GameBoard.getInstance().collisionDetection(
+									GameBoard.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 0);													
 							}							
 						}
 					}					
@@ -430,20 +365,20 @@ public class Spielfigur implements PlayerOwned {
 				{
 					System.out.println("Prüfe Kollisionen mit dem gelben Spieler");
 					
-					kollision = Spielbrett.getInstance().collisionDetection(
-							Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 30);
+					kollision = GameBoard.getInstance().collisionDetection(
+							GameBoard.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 30);
 						if(kollision == null)
 						{
-							kollision = Spielbrett.getInstance().collisionDetection(
-								Spielbrett.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 20);
+							kollision = GameBoard.getInstance().collisionDetection(
+								GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 20);
 							if(kollision == null)
 							{
-								kollision = Spielbrett.getInstance().collisionDetection(
-									Spielbrett.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 10);							
+								kollision = GameBoard.getInstance().collisionDetection(
+									GameBoard.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 10);							
 								if(kollision == null)
 								{
-									kollision = Spielbrett.getInstance().collisionDetection(
-										Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 0);													
+									kollision = GameBoard.getInstance().collisionDetection(
+										GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 0);													
 								}							
 							}
 						}					
@@ -452,20 +387,20 @@ public class Spielfigur implements PlayerOwned {
 				{
 					System.out.println("Prüfe Kollisionen mit dem gruenen Spieler");
 					
-					kollision = Spielbrett.getInstance().collisionDetection(
-							Spielbrett.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 30);
+					kollision = GameBoard.getInstance().collisionDetection(
+							GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 30);
 						if(kollision == null)
 						{
-							kollision = Spielbrett.getInstance().collisionDetection(
-								Spielbrett.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 20);
+							kollision = GameBoard.getInstance().collisionDetection(
+								GameBoard.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 20);
 							if(kollision == null)
 							{
-								kollision = Spielbrett.getInstance().collisionDetection(
-									Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 10);							
+								kollision = GameBoard.getInstance().collisionDetection(
+									GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 10);							
 								if(kollision == null)
 								{
-									kollision = Spielbrett.getInstance().collisionDetection(
-										Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 0);													
+									kollision = GameBoard.getInstance().collisionDetection(
+										GameBoard.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 0);													
 								}							
 							}
 						}					
@@ -481,13 +416,13 @@ public class Spielfigur implements PlayerOwned {
 
 	/**
 	 * Eine weitere Methode Kollisionen zu berechnen - nämlich via Koordinaten auf dem Spielfeld.
-	 * Returns a {@link Spielfigur} if there is a collision or false otherwise.
+	 * Returns a {@link Counter} if there is a collision or false otherwise.
 	 */
-	public Spielfigur berechneKollisionViaCoordinates(int xFigur, int yFigur)
+	public Counter berechneKollisionViaCoordinates(int xFigur, int yFigur)
 	{
-		for(Spieler s : SpielManager.getInstance().getSpielerListe())
+		for(Player s : SpielManager.getInstance().getSpielerListe())
 		{
-			for(Spielfigur figur : s.getSpielFiguren())
+			for(Counter figur : s.getSpielFiguren())
 			{
 				//Prüfe ob die X Koordinaten in einem ähnlichen Raum liegen
 				if((figur.getXPosition() > xFigur-10 && figur.getXPosition() < xFigur+10))
@@ -504,5 +439,58 @@ public class Spielfigur implements PlayerOwned {
 		}
 		return null;
 	}
+
+	
+	/**
+	 * Moves a {@link Counter} from its current position to another position.
+	 * 
+	 * @param x new x coordinate for the players location
+	 * @param y new y coordinate for the players location
+	 */
+	private void setNewPosition(int x, int y) {
+		xPosition = x;
+		yPosition = y;
+	}	
+	
+	public int getXStartingZone() {
+		return xStartingZone;
+	}
+
+
+	public int getYStartingZone() {
+		return yStartingZone;
+	}
+
+
+	public Player getOwningPlayer() {
+		return owningPlayer;
+	}
+
+
+	public SpielerFarbe getCounterColor() {
+		return counterColor;
+	}
+
+
+	public JLabel getPlayerImage() {
+		return playerImage;
+	}
+
+	public int getXPosition() {
+		return xPosition;
+	}
+
+	public int getYPosition() {
+		return yPosition;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}	
+	
 	
 }

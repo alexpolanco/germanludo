@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import java.util.LinkedList;
 
+import ludo.domainmodel.manager.SpielManager;
 import ludo.domainmodel.spieler.SpielerFarbe;
-import ludo.domainmodel.spieler.Spielfigur;
-import ludo.main.SpielManager;
+import ludo.domainmodel.spieler.Counter;
 
 import org.junit.Test;
 
@@ -21,11 +21,11 @@ public class TestSpielbrett {
 	@Test
 	public void TestListOrderFuerRotesSpielbrett()
 	{
-		Spielbrett.getInstance().neuesSpiel();
+		GameBoard.getInstance().neuesSpiel();
 		int i = 1;
 		
 		//Prüfe die Reihenfolge der Spielfelder
-		for(Spielfeld feld : Spielbrett.getInstance().getSpielbrett(SpielerFarbe.ROT))
+		for(GameField feld : GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT))
 		{
 			//Compare expected ID and actual ID
 			assertTrue(feld.getPositionsID() == i);
@@ -37,11 +37,11 @@ public class TestSpielbrett {
 	@Test
 	public void TestListOrderFuerBlauesSpielbrett()
 	{
-		Spielbrett.getInstance().neuesSpiel();
+		GameBoard.getInstance().neuesSpiel();
 		int i = 1;
 		
 		//Prüfe die Reihenfolge der Spielfelder
-		for(Spielfeld feld : Spielbrett.getInstance().getSpielbrett(SpielerFarbe.BLAU))
+		for(GameField feld : GameBoard.getInstance().getSpielbrett(SpielerFarbe.BLAU))
 		{
 			//Compare expected ID and actual ID
 			assertTrue(feld.getPositionsID() == i);
@@ -53,11 +53,11 @@ public class TestSpielbrett {
 	@Test
 	public void TestListOrderFuerGelbesSpielbrett()
 	{
-		Spielbrett.getInstance().neuesSpiel();
+		GameBoard.getInstance().neuesSpiel();
 		int i = 1;
 		
 		//Prüfe die Reihenfolge der Spielfelder
-		for(Spielfeld feld : Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GELB))
+		for(GameField feld : GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB))
 		{
 			//Compare expected ID and actual ID
 			assertTrue(feld.getPositionsID() == i);
@@ -69,11 +69,11 @@ public class TestSpielbrett {
 	@Test
 	public void TestListOrderFuerGruenesSpielbrett()
 	{
-		Spielbrett.getInstance().neuesSpiel();
+		GameBoard.getInstance().neuesSpiel();
 		int i = 1;
 		
 		//Prüfe die Reihenfolge der Spielfelder
-		for(Spielfeld feld : Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GRUEN))
+		for(GameField feld : GameBoard.getInstance().getSpielbrett(SpielerFarbe.GRUEN))
 		{
 			//Compare expected ID and actual ID
 			assertTrue(feld.getPositionsID() == i);
@@ -85,11 +85,11 @@ public class TestSpielbrett {
 	@Test
 	public void TestDirectionFuerRotesSpielfeld()
 	{
-		Spielbrett.getInstance().neuesSpiel();
+		GameBoard.getInstance().neuesSpiel();
 		int i = 1;
 		
 		//Prüfe die Reihenfolge der Spielfelder
-		for(Spielfeld feld : Spielbrett.getInstance().getSpielbrett(SpielerFarbe.ROT))
+		for(GameField feld : GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT))
 		{
 			if(feld.getPositionsID() == 1)
 			{
@@ -113,11 +113,11 @@ public class TestSpielbrett {
 	@Test
 	public void TestDirectionFuerGelbesSpielfeld()
 	{
-		Spielbrett.getInstance().neuesSpiel();
+		GameBoard.getInstance().neuesSpiel();
 		int i = 1;
 		
 		//Prüfe die Reihenfolge der Spielfelder
-		for(Spielfeld feld : Spielbrett.getInstance().getSpielbrett(SpielerFarbe.GELB))
+		for(GameField feld : GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB))
 		{
 			if(feld.getPositionsID() == 1)
 			{
@@ -141,22 +141,22 @@ public class TestSpielbrett {
 	@Test
 	public void TestFeldUmrechnungsAlgorithmus () throws InvalidIndexException
 	{
-		assertTrue(Spielbrett.getInstance().berechnePosition(1, 30) == 31);
-		assertTrue(Spielbrett.getInstance().berechnePosition(9, 30) == 39);
-		assertTrue(Spielbrett.getInstance().berechnePosition(15, 30) == 5);
-		assertTrue(Spielbrett.getInstance().berechnePosition(20, 30) == 10);
-		assertTrue(Spielbrett.getInstance().berechnePosition(27, 30) == 17);
-		assertTrue(Spielbrett.getInstance().berechnePosition(36, 30) == 26);
-		assertTrue(Spielbrett.getInstance().berechnePosition(30, 30) == 20);
-		assertTrue(Spielbrett.getInstance().berechnePosition(10, 30) == 40);
+		assertTrue(GameBoard.getInstance().berechnePosition(1, 30) == 31);
+		assertTrue(GameBoard.getInstance().berechnePosition(9, 30) == 39);
+		assertTrue(GameBoard.getInstance().berechnePosition(15, 30) == 5);
+		assertTrue(GameBoard.getInstance().berechnePosition(20, 30) == 10);
+		assertTrue(GameBoard.getInstance().berechnePosition(27, 30) == 17);
+		assertTrue(GameBoard.getInstance().berechnePosition(36, 30) == 26);
+		assertTrue(GameBoard.getInstance().berechnePosition(30, 30) == 20);
+		assertTrue(GameBoard.getInstance().berechnePosition(10, 30) == 40);
 
-		assertTrue(Spielbrett.getInstance().berechnePosition(1, 10) == 11);
-		assertTrue(Spielbrett.getInstance().berechnePosition(9, 10) == 19);
-		assertTrue(Spielbrett.getInstance().berechnePosition(15, 10) == 25);
-		assertTrue(Spielbrett.getInstance().berechnePosition(20, 10) == 30);
-		assertTrue(Spielbrett.getInstance().berechnePosition(27, 10) == 37);
-		assertTrue(Spielbrett.getInstance().berechnePosition(36, 10) == 6);
-		assertTrue(Spielbrett.getInstance().berechnePosition(30, 10) == 40);
+		assertTrue(GameBoard.getInstance().berechnePosition(1, 10) == 11);
+		assertTrue(GameBoard.getInstance().berechnePosition(9, 10) == 19);
+		assertTrue(GameBoard.getInstance().berechnePosition(15, 10) == 25);
+		assertTrue(GameBoard.getInstance().berechnePosition(20, 10) == 30);
+		assertTrue(GameBoard.getInstance().berechnePosition(27, 10) == 37);
+		assertTrue(GameBoard.getInstance().berechnePosition(36, 10) == 6);
+		assertTrue(GameBoard.getInstance().berechnePosition(30, 10) == 40);
 	}
 	
 	@Test
@@ -164,14 +164,14 @@ public class TestSpielbrett {
 	{
 		System.out.println("Testing Collision detection by Coordinates");
 		//Initialisiere Spielbrett
-		Spielbrett.getInstance().neuesSpiel();
+		GameBoard.getInstance().neuesSpiel();
 		//Initialisiere Spieler und Figuren
 		SpielManager.getInstance().initialisiereSpieler("Rot", "Blau", "Gelb", "Gruen");
 		
 		//Setze Figur Rot auf Feld 3 von Rot
 		SpielManager.getInstance().spielerWechsel();
-		Spielfigur spielFigurA = SpielManager.getInstance().getAktiverSpieler().getSpielFiguren().getFirst();
-		Spielfigur spielFigurB = SpielManager.getInstance().getAktiverSpieler().getSpielFiguren().getLast();
+		Counter spielFigurA = SpielManager.getInstance().getAktiverSpieler().getSpielFiguren().getFirst();
+		Counter spielFigurB = SpielManager.getInstance().getAktiverSpieler().getSpielFiguren().getLast();
 		
 		spielFigurA.setXPosition(50);
 		spielFigurA.setYPosition(10);
@@ -179,7 +179,7 @@ public class TestSpielbrett {
 		spielFigurB.setXPosition(55);
 		spielFigurB.setYPosition(7);
 				
-		Spielfigur figurC = spielFigurA.berechneKollisionViaCoordinates(50, 10);
+		Counter figurC = spielFigurA.berechneKollisionViaCoordinates(50, 10);
 		
 		assertTrue(figurC.equals(spielFigurB));
 	}
