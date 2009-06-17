@@ -5,9 +5,9 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 
-import ludo.domainmodel.spielbrett.Spielbrett;
-import ludo.domainmodel.spieler.Spielfigur;
-import ludo.main.SpielManager;
+import ludo.domainmodel.manager.SpielManager;
+import ludo.domainmodel.spielbrett.GameBoard;
+import ludo.domainmodel.spieler.Counter;
 import ludo.ui.SpielbrettGrafik;
 
 public class FigurenListener implements MouseListener{
@@ -25,7 +25,7 @@ public class FigurenListener implements MouseListener{
 		// Bestimme anhand der aktuellen Koordinaten der Spielfigur, ob die
 		// Figur dem aktuell aktiven Spieler gehört - falls nicht gib eine
 		// Fehlermeldung aus
-		for(Spielfigur figur : SpielManager.getInstance().getAktiverSpieler().getSpielFiguren())
+		for(Counter figur : SpielManager.getInstance().getAktiverSpieler().getSpielFiguren())
 		{
 			System.out.println("Überprüfe Spielfiguren des "
 					+ SpielManager.getInstance().getAktiverSpieler()
@@ -40,14 +40,14 @@ public class FigurenListener implements MouseListener{
 				//Prüfe ob die Würfelzahl 6 lautet und der angeklickte Spieler im Startbereich ist
 				if (Integer.valueOf(SpielbrettGrafik.getInstance()
 						.getWuerfelWert()) == 6
-						&& Spielbrett.getInstance().getSpielfeldForSpielfigur(
+						&& GameBoard.getInstance().getSpielfeldForSpielfigur(
 								figur) == null)
 				{
 					//Wenn das klar geht, setze die Spielfigur aufs Startfeld
 					figur.setzeSpielfigurAufStart();
 				}
 				//Prüfe ob die Figur irgendwo auf dem Feld steht - die gewürfelte Zahl ist dabei egal
-				else if(Spielbrett.getInstance().getSpielfeldForSpielfigur(
+				else if(GameBoard.getInstance().getSpielfeldForSpielfigur(
 						figur) != null)
 				{
 					//Gib die weitere Verarbeitung an die folgende Methode ab - die setzt auch die Figur auf dem Brett

@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import ludo.main.SpielManager;
+import ludo.domainmodel.manager.SpielManager;
 import ludo.ui.controls.SpielerSetupDialogListener;
 
 /**

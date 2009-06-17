@@ -2,8 +2,8 @@ package ludo.domainmodel;
 
 import java.util.LinkedList;
 
-import ludo.domainmodel.spielbrett.Spielfeld;
-import ludo.domainmodel.spieler.Spielfigur;
+import ludo.domainmodel.spielbrett.GameField;
+import ludo.domainmodel.spieler.Counter;
 
 /**
  * Ein Kollisionsobjekt enthält informationen zu einer Kollision mit einem anderen Spieler.
@@ -11,10 +11,10 @@ import ludo.domainmodel.spieler.Spielfigur;
  */
 public class Kollision {
 
-	private LinkedList<Spielfeld> kollisionsBrett;
+	private LinkedList<GameField> kollisionsBrett;
 	private int feldID;
 	
-	public Kollision(LinkedList<Spielfeld> kollisionsFeld, int feldID) {
+	public Kollision(LinkedList<GameField> kollisionsFeld, int feldID) {
 		super();
 		this.kollisionsBrett = kollisionsFeld;
 		this.feldID = feldID;
@@ -24,8 +24,8 @@ public class Kollision {
 	 * Gibt das Spielfeld zurück, auf dem die Kollision stattgefunden hat oder
 	 * null, wenn das Feld nicht gefunden wurde.
 	 */
-	public Spielfeld getKollisionsFeld() {
-		for(Spielfeld f : kollisionsBrett)
+	public GameField getKollisionsFeld() {
+		for(GameField f : kollisionsBrett)
 		{
 			if(f.getPositionsID() == feldID)
 			{
@@ -43,9 +43,9 @@ public class Kollision {
 	 * Gibt die Spielfigur zurück, mit der man kollidiert ist oder null wenn
 	 * diese nicht gefunden wird.
 	 */
-	public Spielfigur getKollidierendeSpielfigur()
+	public Counter getKollidierendeSpielfigur()
 	{
-		Spielfigur figur = null;
+		Counter figur = null;
 		
 		//Finde das Spielfend auf dem die Kollision stattgefunden hat
 		for(int i = 0; i < 40; i++)

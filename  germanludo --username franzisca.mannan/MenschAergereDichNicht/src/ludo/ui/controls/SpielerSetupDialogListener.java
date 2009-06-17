@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import ludo.main.SpielManager;
+import ludo.domainmodel.manager.SpielManager;
 import ludo.ui.SpielbrettGrafik;
 import ludo.ui.SpielerSetupDialog;
 

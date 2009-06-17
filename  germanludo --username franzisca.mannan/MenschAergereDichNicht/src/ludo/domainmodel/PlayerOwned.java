@@ -1,6 +1,6 @@
 package ludo.domainmodel;
 
-import ludo.domainmodel.spieler.Spieler;
+import ludo.domainmodel.spieler.Player;
 
 /**
  * 
@@ -13,13 +13,13 @@ public interface PlayerOwned {
 	 * 
 	 * @return den aktuellen Besitzer
 	 */
-	public Spieler getBesitzer();
+	public Player getBesitzer();
 
 	/**
 	 * 
 	 * @param neuerBesitzer der neue Besitzer (i.e. Spieler)
 	 */
-	public void setBesitzer(Spieler neuerBesitzer);
+	public void setBesitzer(Player neuerBesitzer);
 	
 	
 }

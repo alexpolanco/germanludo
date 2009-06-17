@@ -1,4 +1,4 @@
-package ludo.main;
+package ludo.domainmodel.manager;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,10 +9,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import ludo.domainmodel.spielbrett.Spielbrett;
-import ludo.domainmodel.spieler.Spieler;
+import ludo.domainmodel.spielbrett.GameBoard;
+import ludo.domainmodel.spieler.Player;
 import ludo.domainmodel.spieler.SpielerFarbe;
-import ludo.domainmodel.spieler.Spielfigur;
+import ludo.domainmodel.spieler.Counter;
 import ludo.ui.SpielbrettGrafik;
 import ludo.ui.SpielerSetupDialog;
 
@@ -27,7 +27,7 @@ public class SpielManager {
 	private int spielerProRunde;
 	
 	//Spieler rot id = 1 Spieler blau id = 2 Spieler gelb id = 3 Spieler gruen id = 4
-	private LinkedList<Spieler> spielerListe = new LinkedList<Spieler>();
+	private LinkedList<Player> spielerListe = new LinkedList<Player>();
 	
 	public static SpielManager getInstance()
 	{
@@ -40,7 +40,7 @@ public class SpielManager {
 	
 	private SpielManager () 
 	{
-		Spielbrett.getInstance().neuesSpiel();
+		GameBoard.getInstance().neuesSpiel();
 	}
 	
 	public static void main (String [] args)
@@ -75,16 +75,16 @@ public class SpielManager {
 	{
 		if(!spielerRot.equals(""))
 		{
-			Spieler rot = new Spieler(1, spielerRot, SpielerFarbe.ROT, 470, 70);
-			LinkedList<Spielfigur> figuren = new LinkedList<Spielfigur>();
+			Player rot = new Player(1, spielerRot, SpielerFarbe.ROT, 470, 70);
+			LinkedList<Counter> figuren = new LinkedList<Counter>();
 			//oben rechts
-			figuren.add(new Spielfigur(535, 70, 365, 15, rot, SpielerFarbe.ROT, new ImageIcon( this.getClass().getResource("spielerRot.png"))));
+			figuren.add(new Counter(535, 70, 365, 15, rot, SpielerFarbe.ROT, new ImageIcon( this.getClass().getResource("spielerRot.png"))));
 			//unten rechts 
-			figuren.add(new Spielfigur(535, 130, 365, 15, rot, SpielerFarbe.ROT,new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
+			figuren.add(new Counter(535, 130, 365, 15, rot, SpielerFarbe.ROT,new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
 			//oben links
-			figuren.add(new Spielfigur(470, 70, 365, 15, rot, SpielerFarbe.ROT,new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
+			figuren.add(new Counter(470, 70, 365, 15, rot, SpielerFarbe.ROT,new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
 			//unten links
-			figuren.add(new Spielfigur(470, 130, 365, 15, rot, SpielerFarbe.ROT,new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
+			figuren.add(new Counter(470, 130, 365, 15, rot, SpielerFarbe.ROT,new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
 
 			rot.setSpielFiguren(figuren);
 			spielerListe.add(rot);
@@ -92,12 +92,12 @@ public class SpielManager {
 		}
 		if(!spielerBlau.equals(""))
 		{
-			Spieler blau = new Spieler(2, spielerBlau, SpielerFarbe.BLAU, 475, 550);
-			LinkedList<Spielfigur> figuren = new LinkedList<Spielfigur>();
-			figuren.add(new Spielfigur(530, 550, 605, 375, blau, SpielerFarbe.BLAU, new ImageIcon(  this.getClass().getResource("spielerBlau.png"))));
-			figuren.add(new Spielfigur(530, 620, 605, 375, blau, SpielerFarbe.BLAU,new ImageIcon(   this.getClass().getResource("spielerBlau.png"))));
-			figuren.add(new Spielfigur(475, 550, 605, 375, blau, SpielerFarbe.BLAU,new ImageIcon(   this.getClass().getResource("spielerBlau.png"))));
-			figuren.add(new Spielfigur(475, 620, 605, 375, blau, SpielerFarbe.BLAU,new ImageIcon(   this.getClass().getResource("spielerBlau.png"))));
+			Player blau = new Player(2, spielerBlau, SpielerFarbe.BLAU, 475, 550);
+			LinkedList<Counter> figuren = new LinkedList<Counter>();
+			figuren.add(new Counter(530, 550, 605, 375, blau, SpielerFarbe.BLAU, new ImageIcon(  this.getClass().getResource("spielerBlau.png"))));
+			figuren.add(new Counter(530, 620, 605, 375, blau, SpielerFarbe.BLAU,new ImageIcon(   this.getClass().getResource("spielerBlau.png"))));
+			figuren.add(new Counter(475, 550, 605, 375, blau, SpielerFarbe.BLAU,new ImageIcon(   this.getClass().getResource("spielerBlau.png"))));
+			figuren.add(new Counter(475, 620, 605, 375, blau, SpielerFarbe.BLAU,new ImageIcon(   this.getClass().getResource("spielerBlau.png"))));
 
 			blau.setSpielFiguren(figuren);
 			spielerListe.add(blau);			
@@ -105,12 +105,12 @@ public class SpielManager {
 		}
 		if(!spielerGelb.equals(""))
 		{
-			Spieler gelb = new Spieler(3, spielerGelb, SpielerFarbe.GELB, 50, 550);
-			LinkedList<Spielfigur> figuren = new LinkedList<Spielfigur>();
-			figuren.add(new Spielfigur(50, 550, 245, 620, gelb, SpielerFarbe.GELB, new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
-			figuren.add(new Spielfigur(120, 615, 245, 620, gelb, SpielerFarbe.GELB,new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
-			figuren.add(new Spielfigur(120, 550, 245, 620, gelb, SpielerFarbe.GELB,new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
-			figuren.add(new Spielfigur(50, 615, 245, 620, gelb, SpielerFarbe.GELB,new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
+			Player gelb = new Player(3, spielerGelb, SpielerFarbe.GELB, 50, 550);
+			LinkedList<Counter> figuren = new LinkedList<Counter>();
+			figuren.add(new Counter(50, 550, 245, 620, gelb, SpielerFarbe.GELB, new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
+			figuren.add(new Counter(120, 615, 245, 620, gelb, SpielerFarbe.GELB,new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
+			figuren.add(new Counter(120, 550, 245, 620, gelb, SpielerFarbe.GELB,new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
+			figuren.add(new Counter(50, 615, 245, 620, gelb, SpielerFarbe.GELB,new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
 
 			gelb.setSpielFiguren(figuren);
 			spielerListe.add(gelb);			
@@ -118,12 +118,12 @@ public class SpielManager {
 		}
 		if(!spielerGruen.equals(""))
 		{
-			Spieler gruen = new Spieler(4, spielerGruen, SpielerFarbe.GRUEN, 50, 70);
-			LinkedList<Spielfigur> figuren = new LinkedList<Spielfigur>();
-			figuren.add(new Spielfigur(50, 70, 5, 260, gruen, SpielerFarbe.GRUEN, new ImageIcon( this.getClass().getResource("spielerGruen.png"))));
-			figuren.add(new Spielfigur(120, 130, 5, 260, gruen, SpielerFarbe.GRUEN,new ImageIcon(  this.getClass().getResource("spielerGruen.png"))));
-			figuren.add(new Spielfigur(120, 70, 5, 260, gruen, SpielerFarbe.GRUEN,new ImageIcon(  this.getClass().getResource("spielerGruen.png"))));
-			figuren.add(new Spielfigur(50, 130, 5, 260, gruen, SpielerFarbe.GRUEN,new ImageIcon( this.getClass().getResource("spielerGruen.png"))));
+			Player gruen = new Player(4, spielerGruen, SpielerFarbe.GRUEN, 50, 70);
+			LinkedList<Counter> figuren = new LinkedList<Counter>();
+			figuren.add(new Counter(50, 70, 5, 260, gruen, SpielerFarbe.GRUEN, new ImageIcon( this.getClass().getResource("spielerGruen.png"))));
+			figuren.add(new Counter(120, 130, 5, 260, gruen, SpielerFarbe.GRUEN,new ImageIcon(  this.getClass().getResource("spielerGruen.png"))));
+			figuren.add(new Counter(120, 70, 5, 260, gruen, SpielerFarbe.GRUEN,new ImageIcon(  this.getClass().getResource("spielerGruen.png"))));
+			figuren.add(new Counter(50, 130, 5, 260, gruen, SpielerFarbe.GRUEN,new ImageIcon( this.getClass().getResource("spielerGruen.png"))));
 
 			gruen.setSpielFiguren(figuren);
 			spielerListe.add(gruen);			
@@ -136,7 +136,7 @@ public class SpielManager {
 	 */
 	public void zeichneSpielername()
 	{
-		for(Spieler s : spielerListe)
+		for(Player s : spielerListe)
 		{
 			//Zeichne den Spielernamen aufs Spielfeld - die Koordinaten hängen von der gewählten Farbe ab
 			if(s.getSpielerFarbe() == SpielerFarbe.ROT) {
@@ -157,17 +157,17 @@ public class SpielManager {
 	public void zeichneSpielfiguren()
 	{
 		//Führe das Zeichnen der Figuren für alle Spieler aus
-		for(Spieler s : spielerListe)
+		for(Player s : spielerListe)
 		{			
 			//Gehe über alle Spielfiguren und zeichne sie
-			for(Spielfigur figur : s.getSpielFiguren())
+			for(Counter figur : s.getSpielFiguren())
 			{
 				SpielbrettGrafik.getInstance().zeichneSpielfigur(figur);
 			}
 		}
 	}
 
-	public LinkedList<Spieler> getSpielerListe() {
+	public LinkedList<Player> getSpielerListe() {
 		return spielerListe;
 	}
 
@@ -175,7 +175,7 @@ public class SpielManager {
 	 * Entfernt den aktuell aktiven/agierenden Spieler aus der Liste der teilnehmenden Spieler.
 	 * Grund ist in der Regel, dass alle Figuren ins Ziel geführt wurden.
 	 */
-	public void spielerEntfernen(Spieler spieler)
+	public void spielerEntfernen(Player spieler)
 	{
 		spielerListe.remove(spieler);
 	}
@@ -184,7 +184,7 @@ public class SpielManager {
 	 * Schaut sich denn ersten Spieler in der Queue an und liefert ihn zurück -
 	 * oder null, wenn die Queue leer ist.
 	 */
-	public Spieler getAktiverSpieler() {
+	public Player getAktiverSpieler() {
 		
 		return spielerListe.peekFirst();
 	}

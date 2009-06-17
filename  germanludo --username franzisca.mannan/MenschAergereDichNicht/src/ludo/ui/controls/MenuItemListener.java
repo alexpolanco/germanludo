@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 
-import ludo.domainmodel.spielbrett.Spielbrett;
+import ludo.domainmodel.spielbrett.GameBoard;
 import ludo.ui.SpielbrettGrafik;
 import ludo.ui.SpielerSetupDialog;
 

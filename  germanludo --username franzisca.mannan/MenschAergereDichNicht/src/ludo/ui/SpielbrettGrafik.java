@@ -27,8 +27,8 @@ import javax.swing.border.MatteBorder;
 
 import sun.awt.RepaintArea;
 
-import ludo.domainmodel.spielbrett.Spielbrett;
-import ludo.domainmodel.spieler.Spielfigur;
+import ludo.domainmodel.spielbrett.GameBoard;
+import ludo.domainmodel.spieler.Counter;
 import ludo.ui.controls.FigurenListener;
 import ludo.ui.controls.MenuItemListener;
 import ludo.ui.controls.WuerfelListener;
@@ -103,7 +103,7 @@ public class SpielbrettGrafik {
 	/**
 	 * Aktualisiert die Position einer Spielfigur auf dem Spielfeld.
 	 */
-	public void zeichneSpielfigur(Spielfigur figur)
+	public void zeichneSpielfigur(Counter figur)
 	{		
 		background.remove(figur.getSpielfigurGrafik());
 		figur.getSpielfigurGrafik().setBounds(figur.getXPosition(), figur.getYPosition(), 50, 50);		

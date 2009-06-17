@@ -1,13 +1,13 @@
 package ludo.domainmodel.spielbrett;
 
-import ludo.domainmodel.spieler.Spielfigur;
+import ludo.domainmodel.spieler.Counter;
 
 
 /**
   * Jedes Spielfeld wird duch ein eigenes Spielfeld-Objekt repräsentiert.
 
   */ 
-public class Spielfeld {
+public class GameField {
 
 	/*
 	 * Jedes Spielfeld hat eine Positions-id zwischen 1 und 44. Relevant für die
@@ -32,9 +32,9 @@ public class Spielfeld {
 	 * immer erst mit der entsprechenden Methode (s.u.) abfragen OB jemand drauf
 	 * steht.
 	 */
-	private Spielfigur besetztVon = null;
+	private Counter besetztVon = null;
 						
-	public Spielfeld(int positionsID, FeldTyp feldTyp,
+	public GameField(int positionsID, FeldTyp feldTyp,
 			Bewegungsrichtung folgeFeld) {
 		super();
 		this.positionsID = positionsID;
@@ -83,11 +83,11 @@ public class Spielfeld {
 		}
 	}
 
-	public Spielfigur getBesetztVon() {
+	public Counter getBesetztVon() {
 		return besetztVon;
 	}
 
-	public void setBesetztVon(Spielfigur besetztVon) {
+	public void setBesetztVon(Counter besetztVon) {
 		System.out.println("Spielfeld mit der PositionsID " + getPositionsID()
 				+ " wird besetzt von Spielfigur "
 				+ besetztVon.getFigurenFarbe());
