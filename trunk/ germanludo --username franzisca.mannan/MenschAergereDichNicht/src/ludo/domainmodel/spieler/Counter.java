@@ -8,15 +8,7 @@ import javax.swing.JLabel;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import ludo.domainmodel.Kollision;
-import ludo.domainmodel.Koordinate;
-import ludo.domainmodel.PlayerOwned;
-import ludo.domainmodel.manager.SpielManager;
-import ludo.domainmodel.spielbrett.Bewegungsrichtung;
-import ludo.domainmodel.spielbrett.FeldTyp;
-import ludo.domainmodel.spielbrett.InvalidIndexException;
-import ludo.domainmodel.spielbrett.GameBoard;
-import ludo.domainmodel.spielbrett.GameField;
+import ludo.domainmodel.*;
 import ludo.ui.SpielbrettGrafik;
 import ludo.ui.controls.FigurenListener;
 
@@ -112,10 +104,10 @@ public class Counter {
 				System.out.println("Entferne Spielfigur "
 						+ kollisionsFigur.getFigurenFarbe()
 						+ " vom Feld mit der PositionsID "
-						+ GameBoard.getInstance().getSpielfeldForSpielfigur(
+						+ GameBoard.getInstance().getCounterPosition(
 								kollisionsFigur));
 				
-				GameBoard.getInstance().getSpielfeldForSpielfigur(kollisionsFigur).setNichtBesetzt();
+				GameBoard.getInstance().getCounterPosition(kollisionsFigur).setNichtBesetzt();
 			}									
 		}
 		//Aktualisiere Koordinaten die zum Zeichnen verwendet werden
@@ -140,7 +132,7 @@ public class Counter {
 	 */
 	public void bewegeSpielfigur (int wuerfelZahl)
 	{		
-		GameField feld = GameBoard.getInstance().getSpielfeldForSpielfigur(this);
+		GameField feld = GameBoard.getInstance().getCounterPosition(this);
 				
 		//Prüfen, ob man über das 44 Feld hinaus gehen würde
 		if(feld != null && feld.getPositionsID()+wuerfelZahl > 44)
@@ -179,7 +171,7 @@ public class Counter {
 							+ kollisionsFigur.getFigurenFarbe() + " wurde geschlagen.");
 					
 					//Das Feld auf dem sie stand leeren
-					GameBoard.getInstance().getSpielfeldForSpielfigur(kollisionsFigur).setNichtBesetzt();
+					GameBoard.getInstance().getCounterPosition(kollisionsFigur).setNichtBesetzt();
 
 					//Die Kollision fand mit einer anderen Spielfigur statt - entferne diese vom Spielbrett
 					kollisionsFigur.setzeSpielfigurInDenStartbereich();
@@ -216,7 +208,7 @@ public class Counter {
 	{
 		
 		//aktuelles Feld feststellen
-		GameField aktuellesFeld = GameBoard.getInstance().getSpielfeldForSpielfigur(this);
+		GameField aktuellesFeld = GameBoard.getInstance().getCounterPosition(this);
 		
 		if(aktuellesFeld.getRichtungZuFolgeFeld() == Bewegungsrichtung.LINKS)
 		{
@@ -239,7 +231,7 @@ public class Counter {
 		GameField neuesFeld = GameBoard.getInstance().getSpielbrett(this.getFigurenFarbe()).get(aktuellesFeld.getPositionsID());
 		
 		//Spielerdaten vom vorherhigen Feld löschen
-		GameBoard.getInstance().getSpielfeldForSpielfigur(this).setNichtBesetzt();
+		GameBoard.getInstance().getCounterPosition(this).setNichtBesetzt();
 
 		//Spieldaten auf dem neuen Feld aktualisieren
 		if( GameBoard.getInstance().getSpielbrett(getFigurenFarbe()).contains(neuesFeld) )
@@ -266,7 +258,7 @@ public class Counter {
 		LinkedList<GameField> brett = GameBoard.getInstance().getSpielbrett(this.getFigurenFarbe());
 
 		//Bestimme das aktuelle Spielfeld der Figur
-		GameField aktuellesFeld = GameBoard.getInstance().getSpielfeldForSpielfigur(this);
+		GameField aktuellesFeld = GameBoard.getInstance().getCounterPosition(this);
 		
 		while(wuerfelZahl > 0)
 		{
@@ -301,123 +293,13 @@ public class Counter {
 		return zielPunkt;
 	}
 	
-	/**
-	 * Prüft - ob eine Kolligion vorliegt. Wenn ja, gibt es ein Kollisionsobjekt zurück, andernfalls null.
-	 */
-	private Kollision berechneKollision()
-	{
-		Kollision kollision = null;
-		
-		try 
-		{
-			// Prüfe die aktuelle Figurenfarbe und anhand dessen entscheide
-			// welche anderen Felder geprüft werden müssen
-			switch(counterColor)
-			{
-				case ROT:
-				{
-					System.out.println("Prüfe Kollisionen mit dem roten Spieler");
-					//Prüfe das blaue Brett
-					kollision = GameBoard.getInstance().collisionDetection(
-						GameBoard.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 30);
-					if(kollision == null)
-					{
-						//Prüfe das gelbe Brett
-						kollision = GameBoard.getInstance().collisionDetection(
-							GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 20);
-						if(kollision == null)
-						{
-							//Prüfe das gruene Brett
-							kollision = GameBoard.getInstance().collisionDetection(
-								GameBoard.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 10);							
-							if(kollision == null)
-							{
-								//Prüfe das rote Brett
-								kollision = GameBoard.getInstance().collisionDetection(
-									GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 0);													
-							}							
-						}
-					}						
-				} break;
-				case BLAU:
-				{
-					System.out.println("Prüfe Kollisionen mit dem blauen Spieler");
-					
-					kollision = GameBoard.getInstance().collisionDetection(
-						GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 30);
-					if(kollision == null)
-					{
-						kollision = GameBoard.getInstance().collisionDetection(
-							GameBoard.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 20);
-						if(kollision == null)
-						{
-							kollision = GameBoard.getInstance().collisionDetection(
-								GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 10);							
-							if(kollision == null)
-							{
-								kollision = GameBoard.getInstance().collisionDetection(
-									GameBoard.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 0);													
-							}							
-						}
-					}					
-				}break;
-				case GELB:
-				{
-					System.out.println("Prüfe Kollisionen mit dem gelben Spieler");
-					
-					kollision = GameBoard.getInstance().collisionDetection(
-							GameBoard.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 30);
-						if(kollision == null)
-						{
-							kollision = GameBoard.getInstance().collisionDetection(
-								GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 20);
-							if(kollision == null)
-							{
-								kollision = GameBoard.getInstance().collisionDetection(
-									GameBoard.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 10);							
-								if(kollision == null)
-								{
-									kollision = GameBoard.getInstance().collisionDetection(
-										GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 0);													
-								}							
-							}
-						}					
-				}break;
-				case GRUEN:
-				{
-					System.out.println("Prüfe Kollisionen mit dem gruenen Spieler");
-					
-					kollision = GameBoard.getInstance().collisionDetection(
-							GameBoard.getInstance().getSpielbrett(SpielerFarbe.ROT), 1, 30);
-						if(kollision == null)
-						{
-							kollision = GameBoard.getInstance().collisionDetection(
-								GameBoard.getInstance().getSpielbrett(SpielerFarbe.BLAU), 1, 20);
-							if(kollision == null)
-							{
-								kollision = GameBoard.getInstance().collisionDetection(
-									GameBoard.getInstance().getSpielbrett(SpielerFarbe.GELB), 1, 10);							
-								if(kollision == null)
-								{
-									kollision = GameBoard.getInstance().collisionDetection(
-										GameBoard.getInstance().getSpielbrett(SpielerFarbe.GRUEN), 1, 0);													
-								}							
-							}
-						}					
-				}break;
-			}
-		} 
-		catch (InvalidIndexException e) 
-		{
-			e.printStackTrace();
-		}		
-		return kollision;
-	}
 
+
+	// TODO free for removal
 	/**
 	 * Eine weitere Methode Kollisionen zu berechnen - nämlich via Koordinaten auf dem Spielfeld.
 	 * Returns a {@link Counter} if there is a collision or false otherwise.
-	 */
+	
 	public Counter berechneKollisionViaCoordinates(int xFigur, int yFigur)
 	{
 		for(Player s : SpielManager.getInstance().getSpielerListe())
@@ -439,7 +321,7 @@ public class Counter {
 		}
 		return null;
 	}
-
+ */
 	
 	/**
 	 * Moves a {@link Counter} from its current position to another position.

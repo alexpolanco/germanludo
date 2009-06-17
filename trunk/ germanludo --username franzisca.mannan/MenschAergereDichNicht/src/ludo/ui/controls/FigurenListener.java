@@ -40,14 +40,14 @@ public class FigurenListener implements MouseListener{
 				//Prüfe ob die Würfelzahl 6 lautet und der angeklickte Spieler im Startbereich ist
 				if (Integer.valueOf(SpielbrettGrafik.getInstance()
 						.getWuerfelWert()) == 6
-						&& GameBoard.getInstance().getSpielfeldForSpielfigur(
+						&& GameBoard.getInstance().getCounterPosition(
 								figur) == null)
 				{
 					//Wenn das klar geht, setze die Spielfigur aufs Startfeld
 					figur.setzeSpielfigurAufStart();
 				}
 				//Prüfe ob die Figur irgendwo auf dem Feld steht - die gewürfelte Zahl ist dabei egal
-				else if(GameBoard.getInstance().getSpielfeldForSpielfigur(
+				else if(GameBoard.getInstance().getCounterPosition(
 						figur) != null)
 				{
 					//Gib die weitere Verarbeitung an die folgende Methode ab - die setzt auch die Figur auf dem Brett

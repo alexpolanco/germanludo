@@ -1,4 +1,4 @@
-package ludo.domainmodel.spielbrett;
+package ludo.exceptions;
 
 /**
  * 
