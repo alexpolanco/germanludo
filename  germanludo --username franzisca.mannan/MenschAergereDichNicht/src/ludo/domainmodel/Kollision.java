@@ -2,6 +2,7 @@ package ludo.domainmodel;
 
 import java.util.LinkedList;
 
+import ludo.domainmodel.spielbrett.GameBoard;
 import ludo.domainmodel.spielbrett.GameField;
 import ludo.domainmodel.spieler.Counter;
 
@@ -11,13 +12,13 @@ import ludo.domainmodel.spieler.Counter;
  */
 public class Kollision {
 
-	private LinkedList<GameField> kollisionsBrett;
-	private int feldID;
+	private GameBoard gameBoard;
+	private int fieldID;
 	
-	public Kollision(LinkedList<GameField> kollisionsFeld, int feldID) {
+	public Kollision(GameBoard board, int feldID) {
 		super();
-		this.kollisionsBrett = kollisionsFeld;
-		this.feldID = feldID;
+		this.gameBoard = board;
+		this.fieldID = feldID;
 	}
 
 	/**
@@ -25,18 +26,11 @@ public class Kollision {
 	 * null, wenn das Feld nicht gefunden wurde.
 	 */
 	public GameField getKollisionsFeld() {
-		for(GameField f : kollisionsBrett)
-		{
-			if(f.getPositionsID() == feldID)
-			{
-				return f;
-			}
-		}
-		return null;
+		return gameBoard.getGameFieldList();
 	}
 
 	public int getFeldID() {
-		return feldID;
+		return fieldID;
 	}
 
 	/**
@@ -50,7 +44,7 @@ public class Kollision {
 		//Finde das Spielfend auf dem die Kollision stattgefunden hat
 		for(int i = 0; i < 40; i++)
 		{
-			if(kollisionsBrett.get(i).getPositionsID() == feldID)
+			if(kollisionsBrett.get(i).getPositionsID() == fieldID)
 			{
 				//Überprüfung, ob wir auch das richtige Feld gefunden haben
 				figur = kollisionsBrett.get(i).getBesetztVon();				

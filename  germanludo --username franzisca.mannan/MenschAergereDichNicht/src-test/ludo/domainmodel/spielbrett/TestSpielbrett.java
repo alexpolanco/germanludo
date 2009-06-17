@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import ludo.domainmodel.manager.SpielManager;
 import ludo.domainmodel.spieler.SpielerFarbe;
 import ludo.domainmodel.spieler.Counter;
+import ludo.exceptions.InvalidIndexException;
 
 import org.junit.Test;
 
