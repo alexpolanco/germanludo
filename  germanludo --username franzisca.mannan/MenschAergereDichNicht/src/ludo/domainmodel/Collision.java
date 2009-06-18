@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import ludo.domainmodel.spielbrett.GameBoard;
 import ludo.domainmodel.spielbrett.GameField;
-import ludo.domainmodel.spieler.Counter;
 import ludo.exceptions.CounterPositionNotFoundException;
 
 /**

@@ -1,6 +1,6 @@
 package ludo.domainmodel.spielbrett;
 
-import ludo.domainmodel.spieler.Counter;
+import ludo.domainmodel.Counter;
 
 
 /**

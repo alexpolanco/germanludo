@@ -1,4 +1,4 @@
-package ludo.domainmodel.spieler;
+package ludo.domainmodel;
 
 import java.awt.Point;
 import java.util.LinkedList;
