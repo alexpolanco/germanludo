@@ -3,14 +3,18 @@ package ludo.ui.controls;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ludo.domainmodel.manager.SpielManager;
+import ludo.domainmodel.Counter;
+import ludo.domainmodel.manager.CounterManager;
+import ludo.domainmodel.manager.GameManager;
+import ludo.domainmodel.manager.PlayerManager;
 import ludo.domainmodel.spielbrett.GameBoard;
-import ludo.domainmodel.spieler.Counter;
+import ludo.exceptions.CounterPositionNotFoundException;
+import ludo.exceptions.GameBoardNotFoundException;
+import ludo.exceptions.GameFieldIsOccupiedException;
 import ludo.ui.SpielbrettGrafik;
 
 /**
- * Fängt Klick-Ereignisse des Würfels ab und behandelt diese
- *
+ * Handles clicks on the dice.
  */
 public class WuerfelListener implements ActionListener {
 
@@ -18,50 +22,52 @@ public class WuerfelListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println("Es wurde gewuerfelt");
 		
-		//Überprüfen ob es überhaupt einen aktiven Spieler gibt, der würfeln darf
-		if(SpielManager.getInstance().getAktiverSpieler() != null)
+		// Check whether there is an active Player that is allowed to dice
+		if(PlayerManager.getInstance().hasCurrentPlayer())
 		{
-			//Zeige die gerade gewürfelte Zahl an
-			SpielbrettGrafik.getInstance().setWuerfelWert(String.valueOf(SpielManager.getInstance().wuerfeln()));		
+			//Display the current dice value
+			SpielbrettGrafik.getInstance().setDiceValue(
+					String.valueOf(GameManager.getInstance().throwDice()));		
 
-			//Wenn der Spieler keine Figur draußen hat und es sich nicht um eine 6 handelt, wechsel den aktiven Spieler
-			if(Integer.valueOf(SpielbrettGrafik.getInstance().getWuerfelWert()) < 6)
+			// If the player has no active counter and didnt dice a 6 change the
+			// active player
+			if(Integer.valueOf(SpielbrettGrafik.getInstance().getDiceValue()) < 6)
 			{
-				if(SpielManager.getInstance().getAktiverSpieler().hasActiveCounters())
-				{
-					System.out.println("Der aktive Spieler hat mindestens eine Figur auf dem Feld - bitte wählen sie ihren Zug.");
-				}
-				else
-				{
-					//Hat keine aktiven Spielfiguren, also ist der nächste dran
-					System.out.println("Spielerwechsel - da keine aktive Figur auf dem Feld.");
-					SpielManager.getInstance().spielerWechsel();
-					System.out.println("\n\nNächster aktiver Spieler ist: "
-							+ SpielManager.getInstance().getAktiverSpieler()
-									.getSpielerFarbe().toString());					
+				if(PlayerManager.getInstance().getCurrentPlayer().hasActiveCounters()) {
+					//TODO let the player set his counter
+					SpielbrettGrafik.getInstance().displayStatusMessage("Bitte setzen die eine Spielfigur");
+				} else {					
+					SpielbrettGrafik.getInstance().displayStatusMessage("Spielerwechsel - da keine aktive Figur auf dem Spielfeld.");
+					PlayerManager.getInstance().switchActivePlayer();
 				}
 			} 
-			else if(Integer.valueOf(SpielbrettGrafik.getInstance().getWuerfelWert()) == 6)
+			else if(Integer.valueOf(SpielbrettGrafik.getInstance().getDiceValue()) == 6) 
 			{
-				//Wenn es eine 6 war und noch keine Figur draußen ist, setze automatisch eine Figur aufs Startfeld
-				if(!SpielManager.getInstance().getAktiverSpieler().hasActiveCounters())
-				{
-					System.out.println("Eine 6 wurde gewürfelt - Figur wird automatisch auf Start gesetzt.");
-					SpielManager.getInstance().getAktiverSpieler().getSpielFiguren().getFirst().setzeSpielfigurAufStart();
-					
-				} 
-				else
-				{
-					System.out.println("Der aktive Spieler hat mindestens eine Figur auf dem Feld - bitte wählen sie ihren Zug.");
-					
+				// If dice shows 6 and no counter is out - put one out
+				// automatically
+				if(!PlayerManager.getInstance().getCurrentPlayer().hasActiveCounters()) {
+					try {
+						CounterManager.getInstance().placeCounterOnStartField(
+								PlayerManager.getInstance().getCurrentPlayer()
+										.getCounters().getFirst());
+						
+					} catch (CounterPositionNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (GameFieldIsOccupiedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (GameBoardNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}					
+				} else {
+					SpielbrettGrafik.getInstance().displayStatusMessage("Bitte setzen die eine Spielfigur");
 				}				
-				//Da der Spieler eine 6 gewürfelt hat, bleibt er aktiv
 			}
-		} 
-		else
-		{
-			System.out.println("Derzeit gibt es keinen aktiven Spieler - das Würfeln ist somit nicht erlaubt.");
+		} else {
+			SpielbrettGrafik .getInstance().displayStatusMessage(
+							"Es gibt derzeit keinen aktiven Spieler - daher kann nicht gewürfelt werden.");
 		}
 	}
-
 }
