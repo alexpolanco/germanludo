@@ -1,6 +1,6 @@
 package ludo.domainmodel.spielbrett;
 
-import ludo.domainmodel.spieler.SpielerFarbe;
+import ludo.domainmodel.SpielerFarbe;
 
 /**
  * Definiert die Richtungen in die sich eine Spielfigur bewegen kann,

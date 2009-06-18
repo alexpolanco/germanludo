@@ -6,11 +6,11 @@ import java.util.LinkedList;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import ludo.domainmodel.Collision;
+import ludo.domainmodel.Counter;
+import ludo.domainmodel.Player;
+import ludo.domainmodel.SpielerFarbe;
 import ludo.domainmodel.spielbrett.GameBoard;
 import ludo.domainmodel.spielbrett.GameField;
-import ludo.domainmodel.spieler.Counter;
-import ludo.domainmodel.spieler.Player;
-import ludo.domainmodel.spieler.SpielerFarbe;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.GameBoardNotFoundException;
 import ludo.exceptions.GameFieldIsOccupiedException;
@@ -164,6 +164,22 @@ public class GameBoardManager {
 	}
 
 	/**
+	 * Returns true if a given {@link Counter} is on a {@link GameBoard} and
+	 * false otherwise.
+	 */
+	public boolean getIsCounterOnGameBoard(Counter counter)
+	{
+		try {
+			if(getCounterPosition(counter) != null)
+				return true;
+		} catch (CounterPositionNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;		
+	}
+
+	/**
 	 * Returns a {@link GameBoard} of a given {@link Color} or throws an
 	 * exception if the {@link GameBoard} could not be found.
 	 * 
@@ -171,7 +187,7 @@ public class GameBoardManager {
 	 */
 	public GameBoard getGameBoardByColor(SpielerFarbe farbe) throws GameBoardNotFoundException
 	{
-		for(Player player : SpielManager.getInstance().getSpielerListe())
+		for(Player player : PlayerManager.getInstance().getPlayerList())
 		{
 			if(player.getPlayerColor().equals(farbe))
 			{

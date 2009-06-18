@@ -1,4 +1,4 @@
-package ludo.domainmodel.spieler;
+package ludo.domainmodel;
 
 import java.awt.Point;
 import java.util.LinkedList;
@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import ludo.domainmodel.spielbrett.GameBoard;
 
 /**
- * Play class unites common behaviour and attributes of human and ai
+ * Play class unites common behavior and attributes of human and ai
  * {@link Player}.
  */
-public class Player {
+public abstract class Player {
 
 	//Every player has a unique ID
 	private int playerID;
@@ -26,6 +26,9 @@ public class Player {
 	//Position of the start field for the player's counters
 	private Point startFieldLocation;
 
+	//Position where the player name is displayed
+	private Point playerNameLocation;
+
 	/**
 	 * Returns a list containing all counters of the current Player. Players
 	 * which have reached their home zone are removed from the list of active
@@ -33,26 +36,32 @@ public class Player {
 	 * active {@link Counter}s.
 	 */
 	private LinkedList<Counter> counters = new LinkedList<Counter>();	
-		
+	
+
 	/**
 	 * Creates a new {@link Player}.
 	 * 
-	 * @param id unique ID of the player
 	 * @param name name of the {@link Player}
 	 * @param color color of the {@link Player}
 	 * @param medal coordinates for the player medal, which is displayed once he finishes the game
 	 * @param start coordinates for the start field for the current {@link Player}
 	 */
-	public Player(int id, String name, SpielerFarbe color, Point start, Point medal)
+	public Player(String name, SpielerFarbe color, Point start, Point medal, Point nameLocation)
 	{
-		playerID = id;
 		playerName = name;
 		playerColor = color;
+		playerNameLocation = nameLocation;
 		
 		medalLocation = medal;
 		startFieldLocation = start;
 	}
 
+	public Player(String name, SpielerFarbe color)
+	{
+		playerName = name;
+		playerColor = color;
+	}
+	
 	/**
 	 * Returns true if the {@link Player} has active {@link Counter}s on his
 	 * {@link GameBoard} or false otherwise. A {@link Counter} is considered
@@ -118,6 +127,21 @@ public class Player {
 		return startFieldLocation;
 	}
 
-	
+	public Point getPlayerNameLocation() {
+		return playerNameLocation;
+	}
 
+	public void setMedalLocation(Point medalLocation) {
+		this.medalLocation = medalLocation;
+	}
+
+	public void setStartFieldLocation(Point startFieldLocation) {
+		this.startFieldLocation = startFieldLocation;
+	}
+
+	public void setPlayerNameLocation(Point playerNameLocation) {
+		this.playerNameLocation = playerNameLocation;
+	}	
+
+	
 }

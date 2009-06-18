@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 import ludo.domainmodel.Collision;
-import ludo.domainmodel.spieler.SpielerFarbe;
-import ludo.domainmodel.spieler.Counter;
+import ludo.domainmodel.Counter;
+import ludo.domainmodel.SpielerFarbe;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.InvalidIndexException;
 
@@ -65,11 +65,11 @@ public class GameBoard {
 	{		
 		// TODO seems to do the same stuff as getCounter - maybe merge both
 		// methods or reuse code
-		for(GameField feld : this.getGameFieldList())
+		for(GameField field : this.getGameFieldList())
 		{
-			if(feld.isOccupied() && feld.getIsOccupiedBy().equals(figur))
+			if(field.isOccupied() && field.getIsOccupiedBy().equals(figur))
 			{
-				return feld;
+				return field;
 			}
 		}
 		throw new CounterPositionNotFoundException("The " + figur.getCounterColor().toString() + " Counter could not be found on this GameBoard");

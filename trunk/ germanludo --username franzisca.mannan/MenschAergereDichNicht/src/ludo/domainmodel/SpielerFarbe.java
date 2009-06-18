@@ -1,4 +1,4 @@
-package ludo.domainmodel.spieler;
+package ludo.domainmodel;
 
 /**
  * Die Spielfarben rot, gelb, blau, gruen als enum;
