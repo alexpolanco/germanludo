@@ -1,5 +1,6 @@
 package ludo.domainmodel.spieler;
 
+import java.awt.Point;
 import java.util.LinkedList;
 
 import ludo.domainmodel.spielbrett.GameBoard;
@@ -20,12 +21,10 @@ public class Player {
 	private GameBoard gameBoard;
 	
 	//Coordinates of the medal in case the player finishes the game
-	private int xCoordinateMedal;
-	private int yCoordinateMedal;
+	private Point medalLocation;
 
 	//Position of the start field for the player's counters
-	private int xPositionStartfeld;
-	private int yPositionStartfeld;
+	private Point startFieldLocation;
 
 	/**
 	 * Returns a list containing all counters of the current Player. Players
@@ -41,17 +40,17 @@ public class Player {
 	 * @param id unique ID of the player
 	 * @param name name of the {@link Player}
 	 * @param color color of the {@link Player}
-	 * @param xMedal x coordinate for the player medal, which is displayed once he finishes the game
-	 * @param yMedal y coordinate for the player medal, which is displayed once he finishes the game
+	 * @param medal coordinates for the player medal, which is displayed once he finishes the game
+	 * @param start coordinates for the start field for the current {@link Player}
 	 */
-	public Player(int id, String name, SpielerFarbe color, int xMedal, int yMedal)
+	public Player(int id, String name, SpielerFarbe color, Point start, Point medal)
 	{
 		playerID = id;
 		playerName = name;
 		playerColor = color;
 		
-		xCoordinateMedal = xMedal;
-		yCoordinateMedal = yMedal;
+		medalLocation = medal;
+		startFieldLocation = start;
 	}
 
 	/**
@@ -86,14 +85,6 @@ public class Player {
 		}
 		return false;
 	}
-	
-	public int getXMedaille() {
-		return xCoordinateMedal;
-	}
-
-	public int getYMedaille() {
-		return yCoordinateMedal;
-	}
 
 	public LinkedList<Counter> getCounters() {
 		return counters;
@@ -119,19 +110,14 @@ public class Player {
 		return gameBoard;
 	}
 
-	public int getXCoordinateMedal() {
-		return xCoordinateMedal;
+	public Point getMedalLocation() {
+		return medalLocation;
 	}
 
-	public int getYCoordinateMedal() {
-		return yCoordinateMedal;
+	public Point getStartFieldLocation() {
+		return startFieldLocation;
 	}
 
-	public int getXPositionStartfeld() {
-		return xPositionStartfeld;
-	}
+	
 
-	public int getYPositionStartfeld() {
-		return yPositionStartfeld;
-	}
 }

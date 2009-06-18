@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import ludo.domainmodel.Kollision;
+import ludo.domainmodel.Collision;
 import ludo.domainmodel.spielbrett.GameBoard;
 import ludo.domainmodel.spielbrett.GameField;
 import ludo.domainmodel.spieler.Counter;
@@ -13,7 +13,9 @@ import ludo.domainmodel.spieler.Player;
 import ludo.domainmodel.spieler.SpielerFarbe;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.GameBoardNotFoundException;
+import ludo.exceptions.GameFieldIsOccupiedException;
 import ludo.exceptions.InvalidIndexException;
+import ludo.ui.SpielbrettGrafik;
 
 /**
  * Organizes available {@link GameBoard}s.
@@ -30,7 +32,7 @@ public class GameBoardManager {
 		
 	}
 	
-	public GameBoardManager getInstance()
+	public static GameBoardManager getInstance()
 	{
 		if(self == null)
 			self = new GameBoardManager();
@@ -46,20 +48,20 @@ public class GameBoardManager {
 	}
 
 	/**
-	 * Calculates, whether a {@link Kollision} took place between the counters of the {@link Player} whose {@link Color} was passed as an argument and the {@link GameField}
+	 * Calculates, whether a {@link Collision} took place between the counters of the {@link Player} whose {@link Color} was passed as an argument and the {@link GameField}
 	 * 
 	 * @param boardToCompare The {@link GameBoard} with which we are comparing our player position
 	 * @param position The location which is occupied by a {@link Counter} on another {@link GameBoard}
 	 * @param offset The calculative position-difference to the current {@link GameBoard}
 	 */
-	private Kollision collisionDetectionCalculation(GameBoard boardToCompare, int position, int offset)
+	private Collision collisionDetectionCalculation(GameBoard boardToCompare, int position, int offset)
 	{
 		//check the GameField which complies to the position of the other GameField and whether its occupied
 		GameField feld = boardToCompare.getGameFieldList().get(((position + offset) % 40));
 		
-		if(feld.isBesetzt())
+		if(feld.isOccupied())
 		{
-			return new Kollision(boardToCompare, feld.getPositionsID());
+			return new Collision(boardToCompare, feld.getFieldNumber());
 		}
 		else
 		{
@@ -72,17 +74,17 @@ public class GameBoardManager {
 	 * the {@link Player} and either other {@link Counter}s of the same
 	 * {@link Player} or {@link Counter}s of other {@link Player}s. If so, it
 	 * 
-	 * returns a {@link Kollision} object, otherwise it return zero.
+	 * returns a {@link Collision} object, otherwise it return null.
 	 * 
 	 * @throws CounterPositionNotFoundException
 	 * @throws GameBoardNotFoundException
 	 */
-	public Kollision collisionDetection(Counter counter) throws CounterPositionNotFoundException, GameBoardNotFoundException
+	public Collision collisionDetection(Counter counter) throws CounterPositionNotFoundException, GameBoardNotFoundException
 	{
 		// First, determine the GameField where the counter currently resides
 		GameField countersCurrentField = getCounterPosition(counter);
 		// Find  a better solution, such as an empty collision
-		Kollision kollision = null;
+		Collision collision = null;
 		
 		if(countersCurrentField != null) {
 			/*
@@ -91,52 +93,52 @@ public class GameBoardManager {
 			 */
 			if(counter.getCounterColor() == SpielerFarbe.ROT) {
 				
-				kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getPositionsID(), 30);					
-				if(kollision == null) {
-					kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getPositionsID(), 20);					
-					if(kollision == null) {
-						kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getPositionsID(), 10);					
-						if(kollision == null) {
-							kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getPositionsID(), 0);					
+				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getFieldNumber(), 30);					
+				if(collision == null) {
+					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getFieldNumber(), 20);					
+					if(collision == null) {
+						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getFieldNumber(), 10);					
+						if(collision == null) {
+							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getFieldNumber(), 0);					
 						}						
 					}						
 				}									
 			} else if(counter.getCounterColor() == SpielerFarbe.BLAU) {
-				kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getPositionsID(), 0);					
-				if(kollision == null) {
-					kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getPositionsID(), 30);					
-					if(kollision == null) {
-						kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getPositionsID(), 20);					
-						if(kollision == null) {
-							kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getPositionsID(), 10);					
+				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getFieldNumber(), 0);					
+				if(collision == null) {
+					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getFieldNumber(), 30);					
+					if(collision == null) {
+						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getFieldNumber(), 20);					
+						if(collision == null) {
+							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getFieldNumber(), 10);					
 						}						
 					}						
 				}										
 			} else if(counter.getCounterColor() == SpielerFarbe.GELB) {
-				kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getPositionsID(), 10);					
-				if(kollision == null) {
-					kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getPositionsID(), 0);					
-					if(kollision == null) {
-						kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getPositionsID(), 30);					
-						if(kollision == null) {
-							kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getPositionsID(), 20);					
+				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getFieldNumber(), 10);					
+				if(collision == null) {
+					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getFieldNumber(), 0);					
+					if(collision == null) {
+						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getFieldNumber(), 30);					
+						if(collision == null) {
+							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getFieldNumber(), 20);					
 						}						
 					}						
 				}										
 			} else if(counter.getCounterColor() == SpielerFarbe.GRUEN) {
-				kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getPositionsID(), 20);					
-				if(kollision == null) {
-					kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getPositionsID(), 10);					
-					if(kollision == null) {
-						kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getPositionsID(), 0);					
-						if(kollision == null) {
-							kollision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getPositionsID(), 30);					
+				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getFieldNumber(), 20);					
+				if(collision == null) {
+					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getFieldNumber(), 10);					
+					if(collision == null) {
+						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getFieldNumber(), 0);					
+						if(collision == null) {
+							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getFieldNumber(), 30);					
 						}						
 					}						
 				}										
 			}
 		}
-		throw new CounterPositionNotFoundException("The counter could not be attributed to any of the available GameBoards.");
+		return collision;
 	}
 
 	
@@ -181,5 +183,33 @@ public class GameBoardManager {
 
 	public LinkedList<GameBoard> getGameBoards() {
 		return gameBoards;
+	}
+
+	/**
+	 * Places a given {@link Counter} on the {@link GameField} of its owning
+	 * {@link Player} at the given field number. This method requires the
+	 * {@link GameField} to be NOT occupied anymore, otherwise an exception will
+	 * be thrown. Furthermore this method updates the location of the graphical
+	 * representation of the {@link Counter} on the graphical {@link GameBoard}.
+	 * 
+	 * @param counter
+	 *            {@link Counter} which should be placed on a specific
+	 *            {@link GameField}
+	 * @param fieldNumber
+	 *            index of the {@link GameField} where the {@link Counter}
+	 *            should be placed
+	 * @throws GameFieldIsOccupiedException
+	 */
+	public void placeCounterOnGameField(Counter counter, int fieldNumber) throws GameFieldIsOccupiedException
+	{
+		if(!counter.getOwningPlayer().getGameBoard().getGameFieldList().get(fieldNumber).isOccupied())
+		{
+			// If the GameField is not occupied, place the counter there
+			counter.getOwningPlayer().getGameBoard().getGameFieldList().get(fieldNumber).setIsOccupiedBy(counter);
+			SpielbrettGrafik.getInstance().zeichneSpielfigur(counter);					
+
+		} else {
+			throw new GameFieldIsOccupiedException("The GameField on which the Counter should be placed is already occupied by another counter.");			
+		}
 	}
 }

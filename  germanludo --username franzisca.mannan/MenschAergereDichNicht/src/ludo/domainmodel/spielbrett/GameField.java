@@ -9,71 +9,52 @@ import ludo.domainmodel.spieler.Counter;
   */ 
 public class GameField {
 
-	/*
-	 * Jedes Spielfeld hat eine Positions-id zwischen 1 und 44. Relevant für die
-	 * anderen sind nur die Felder 1 bis 40, da die Felder 41 bis 44 die
-	 * Hausfelder der jeweiligen Spielfigur sind.
-	 */
-	private int positionsID;
-	
-	// Der Feldtyp des aktuellen Feldes - enthält weitere Informationen zu dem
-	// Feldtypen und evtl. Restriktionen o.ä.
-	private FeldTyp feldTyp;
+	// Each GameField ha a number which identifies its location on a GameBoard
+	private int fieldNumber;
+
+	//The field type is either home, starting zone or in game
+	private FeldTyp fieldType;
 		
-	//Gibt an in welcher Richtung das Folgefeld liegt
-	private Bewegungsrichtung richtungZuFolgeFeld;
+	// The direction in which the following GameField lies
+	private Bewegungsrichtung directionToNextField;
 	
-	/*
-	 * Das Spielfeld merkt sich auch, welche Figur hier gerade bei ihm
-	 * draufsteht - das braucht ihr,um - wenn eure Figur auf ein neues Feld
-	 * kommt zu checken, ob da schon jemand drauf stehtund wenn ja wer - weil
-	 * der ja dann zur�ck in seinen Bunker mussACHTUNG: Der Wert ist null
-	 * (potenzielle Nullpointer-Exceptions!) wenn niemand draufsteht, daher
-	 * immer erst mit der entsprechenden Methode (s.u.) abfragen OB jemand drauf
-	 * steht.
-	 */
-	private Counter besetztVon = null;
+	//The counter that is currently occupying the GameField
+	private Counter isOccupiedBy = null;
 						
-	public GameField(int positionsID, FeldTyp feldTyp,
-			Bewegungsrichtung folgeFeld) {
+	
+	public GameField(int number, FeldTyp type, Bewegungsrichtung direction) {
 		super();
-		this.positionsID = positionsID;
-		this.feldTyp = feldTyp;
-		this.richtungZuFolgeFeld = folgeFeld;
+		fieldNumber = number;
+		fieldType = type;
+		directionToNextField = direction;
 	}
 	
-	//Getter für den Feldtyp
-
-	public FeldTyp getFeldTyp() {
-		return feldTyp;
-	}
-	
-	//Getter und Setter für die Positions-id
-	
-	public int getPositionsID() {
-		return positionsID;
+	public Counter getIsOccupiedBy() {
+		return isOccupiedBy;
 	}
 
-
-	public void setPositionsID(int positionsID) {
-		this.positionsID = positionsID;
-	}	
-
-	//Getter und Setter für das Folgefeld
-	
-	public Bewegungsrichtung getRichtungZuFolgeFeld() {
-		return richtungZuFolgeFeld;
+	public void setIsOccupiedBy(Counter isOccupiedBy) {
+		this.isOccupiedBy = isOccupiedBy;
 	}
 
-	public void setRichtungZuFolgeFeld(Bewegungsrichtung feld) {
-		this.richtungZuFolgeFeld = feld;
+	public int getFieldNumber() {
+		return fieldNumber;
 	}
-		
-	
-	//Getter und Setter für die Spielfiguren und das Besetztzeichen
 
-	public boolean isBesetzt() {
-		if(besetztVon == null)
+	public FeldTyp getFieldType() {
+		return fieldType;
+	}
+
+	public Bewegungsrichtung getDirectionToNextField() {
+		return directionToNextField;
+	}
+
+	/**
+	 * Returns true if the current {@link GameField} is occupied by a counter
+	 * and false otherwise.
+	 */
+	public boolean isOccupied() {
+		if(isOccupiedBy == null)
 		{
 			return false;			
 		}
@@ -83,20 +64,4 @@ public class GameField {
 		}
 	}
 
-	public Counter getBesetztVon() {
-		return besetztVon;
-	}
-
-	public void setBesetztVon(Counter besetztVon) {
-		System.out.println("Spielfeld mit der PositionsID " + getPositionsID()
-				+ " wird besetzt von Spielfigur "
-				+ besetztVon.getFigurenFarbe());
-		this.besetztVon = besetztVon;
-	}
-
-	public void setNichtBesetzt() {
-		System.out.println("Spieler " + getBesetztVon().getFigurenFarbe()
-				+ " wird entfernt von Feld " + getPositionsID());
-		besetztVon = null;
-	}
 }
