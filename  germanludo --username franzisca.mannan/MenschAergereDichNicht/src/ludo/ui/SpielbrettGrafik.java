@@ -28,8 +28,10 @@ import javax.swing.border.MatteBorder;
 import sun.awt.RepaintArea;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import ludo.domainmodel.Counter;
+import ludo.domainmodel.Player;
+import ludo.domainmodel.SpielerFarbe;
 import ludo.domainmodel.spielbrett.GameBoard;
-import ludo.domainmodel.spieler.Counter;
 import ludo.ui.controls.FigurenListener;
 import ludo.ui.controls.MenuItemListener;
 import ludo.ui.controls.WuerfelListener;
@@ -43,15 +45,11 @@ public class SpielbrettGrafik {
 	private static SpielbrettGrafik self = null;
 	
 	private JMenu spielMenu;
-	private JMenuBar menuBar;
-	
-	private JButton wuerfel;
-	
-	private JPanel background;
-	
+	private JMenuBar menuBar;	
+	private JButton wuerfel;	
+	private JPanel background;	
 	private JFrame frame;
 	
-	private String imageOrdnerPfad = "img" + File.separator;
 	
 	public static SpielbrettGrafik getInstance()
 	{
@@ -116,14 +114,6 @@ public class SpielbrettGrafik {
 		refresh();
 	}
 	
-	public void zeichneSpielername(String name, int x, int y)
-	{
-		JLabel spielerName = new JLabel (name);
-		spielerName.setBounds(x, y, 150, 30);		
-		background.add(spielerName);
-		
-	}
-
 	/**
 	 * Displays a status message in the status bar.
 	 */
@@ -149,16 +139,16 @@ public class SpielbrettGrafik {
 		return frame;
 	}
 
-	public String getWuerfelWert() {
+	public String getDiceValue() {
 		return wuerfel.getText();
 	}
 
-	public void setWuerfelWert(String wert) {
+	public void setDiceValue(String wert) {
 		wuerfel.setText(wert);
 	}
 	
 	/**
-	 * Beendet die Anwendung.
+	 * Exits the application.
 	 */
 	public void beenden()
 	{
@@ -166,15 +156,26 @@ public class SpielbrettGrafik {
 		frame.setVisible(false);
 		frame.dispose();
 	}
-
-	public String getImageOrdnerPfad() {
-		return imageOrdnerPfad;
-	}
 	
 	public void dispose()
 	{
 		background.removeAll();
 		refresh();
+	}
+
+	/**
+	 * Draws the names for all currently existing players. This requires the
+	 * coordinates for the name labels to be set in advance.
+	 */
+	public void drawPlayerNames(LinkedList<Player> players)
+	{
+		for(Player player : players)
+		{
+			JLabel spielerName = new JLabel (player.getPlayerName());
+			spielerName.setBounds((int) player.getPlayerNameLocation().getX(),
+					(int) player.getPlayerNameLocation().getY(), 150, 30);		
+			background.add(spielerName);
+		}
 	}
 	
 	public void zeichneMedaille(int x, int y, ImageIcon icon)

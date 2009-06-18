@@ -1,13 +1,20 @@
 package ludo.ui.controls;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 
-import ludo.domainmodel.manager.SpielManager;
+import ludo.domainmodel.Counter;
+import ludo.domainmodel.manager.CounterManager;
+import ludo.domainmodel.manager.GameBoardManager;
+import ludo.domainmodel.manager.GameManager;
+import ludo.domainmodel.manager.PlayerManager;
+import ludo.domainmodel.spielbrett.FeldTyp;
 import ludo.domainmodel.spielbrett.GameBoard;
-import ludo.domainmodel.spieler.Counter;
+import ludo.exceptions.CounterPositionNotFoundException;
+import ludo.exceptions.GameFieldIsOccupiedException;
 import ludo.ui.SpielbrettGrafik;
 
 public class FigurenListener implements MouseListener{
@@ -15,58 +22,59 @@ public class FigurenListener implements MouseListener{
 	public void mouseClicked(MouseEvent arg0) {
 		JLabel label = (JLabel) arg0.getSource();
 		System.out.println("Es wurde eine Spielfigur angeklickt");
-		
-		//Die Position des Bildes auf das der Spieler geklickt hat
-		int xPosition = label.getX();
-		int yPosition = label.getY();
 
-		System.out.println("Der Spieler klickte auf X = " + xPosition + "| Y = " + yPosition);
+		// Position of the label on which the player clicked
+		Point pointOfClick = new Point(label.getX(), label.getY());
 		
-		// Bestimme anhand der aktuellen Koordinaten der Spielfigur, ob die
-		// Figur dem aktuell aktiven Spieler gehört - falls nicht gib eine
-		// Fehlermeldung aus
-		for(Counter figur : SpielManager.getInstance().getAktiverSpieler().getSpielFiguren())
+		try
 		{
-			System.out.println("Überprüfe Spielfiguren des "
-					+ SpielManager.getInstance().getAktiverSpieler()
-							.getSpielerFarbe());
-
-			System.out.println("Aktuell zu prüfende Figur steht auf X = "
-					+ figur.getXPosition() + "| Y = " + figur.getYPosition());
-
-			if(figur.getXPosition() == xPosition && figur.getYPosition() == yPosition)
+			for (Counter counter : PlayerManager.getInstance().getCurrentPlayer().getCounters())
 			{
-				System.out.println("Die beiden Positionskoordinate stimmen überein");
-				//Prüfe ob die Würfelzahl 6 lautet und der angeklickte Spieler im Startbereich ist
-				if (Integer.valueOf(SpielbrettGrafik.getInstance()
-						.getWuerfelWert()) == 6
-						&& GameBoard.getInstance().getCounterPosition(
-								figur) == null)
+				/*
+				 * Does any of the counter's location match the point on which the
+				 * player clicked?
+				 */
+				if(counter.getCurrentLocation() == pointOfClick)
 				{
-					//Wenn das klar geht, setze die Spielfigur aufs Startfeld
-					figur.setzeSpielfigurAufStart();
-				}
-				//Prüfe ob die Figur irgendwo auf dem Feld steht - die gewürfelte Zahl ist dabei egal
-				else if(GameBoard.getInstance().getCounterPosition(
-						figur) != null)
-				{
-					//Gib die weitere Verarbeitung an die folgende Methode ab - die setzt auch die Figur auf dem Brett
-					//und kickt andere Spieler von selbigem herunter :-)
-					figur.bewegeSpielfigur(Integer.valueOf(SpielbrettGrafik.getInstance().getWuerfelWert()));
-						
-					if(Integer.valueOf(SpielbrettGrafik.getInstance().getWuerfelWert()) != 6)
+					// Check whether a 6 was diced and whether the counter is in the
+					// starting zone
+					if (Integer.valueOf(SpielbrettGrafik.getInstance()
+							.getDiceValue()) == 6
+							&& GameBoardManager.getInstance().getCounterPosition(
+									counter).getFieldType().equals(
+									FeldTyp.WARTEFELD))
+					{
+						// Place the counter on the start field
+						CounterManager.getInstance().placeCounterOnStartField(counter);
+					}
+					// Check whether the counter is elsewhere on the GameBoard
+					else if (GameBoardManager.getInstance().getIsCounterOnGameBoard(counter))
+					{
+						CounterManager.getInstance().processCounterMovement(
+								counter,
+								Integer.valueOf(SpielbrettGrafik.getInstance()
+										.getDiceValue()));						
+					}
+					
+					if(Integer.valueOf(SpielbrettGrafik.getInstance().getDiceValue()) != 6)
 					{						
 						//Nächster Spieler ist an der Reihe
-						SpielManager.getInstance().spielerWechsel();
+						PlayerManager.getInstance().switchActivePlayer();
 					}
 					else
 					{
-						SpielbrettGrafik.getInstance().setWuerfelWert(figur.getFigurenFarbe().toString());
+						SpielbrettGrafik.getInstance().displayStatusMessage("Der Spieler darf noch einmal würfeln");
+						//TODO remove once status bar works
+						SpielbrettGrafik.getInstance().setDiceValue(counter.getCounterColor().toString());
 					}
+					
 				}
-			}
-		}
-		
+			}			
+		} catch(Exception exc)
+		{
+			// TODO give error messages on status bar
+			exc.printStackTrace();
+		}		
 	}
 
 	@Override
