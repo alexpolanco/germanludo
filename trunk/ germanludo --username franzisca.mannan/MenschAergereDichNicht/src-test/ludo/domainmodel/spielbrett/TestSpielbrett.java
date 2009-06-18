@@ -142,22 +142,22 @@ public class TestSpielbrett {
 	@Test
 	public void TestFeldUmrechnungsAlgorithmus () throws InvalidIndexException
 	{
-		assertTrue(GameBoard.getInstance().berechnePosition(1, 30) == 31);
-		assertTrue(GameBoard.getInstance().berechnePosition(9, 30) == 39);
-		assertTrue(GameBoard.getInstance().berechnePosition(15, 30) == 5);
-		assertTrue(GameBoard.getInstance().berechnePosition(20, 30) == 10);
-		assertTrue(GameBoard.getInstance().berechnePosition(27, 30) == 17);
-		assertTrue(GameBoard.getInstance().berechnePosition(36, 30) == 26);
-		assertTrue(GameBoard.getInstance().berechnePosition(30, 30) == 20);
-		assertTrue(GameBoard.getInstance().berechnePosition(10, 30) == 40);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(1, 30) == 31);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(9, 30) == 39);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(15, 30) == 5);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(20, 30) == 10);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(27, 30) == 17);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(36, 30) == 26);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(30, 30) == 20);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(10, 30) == 40);
 
-		assertTrue(GameBoard.getInstance().berechnePosition(1, 10) == 11);
-		assertTrue(GameBoard.getInstance().berechnePosition(9, 10) == 19);
-		assertTrue(GameBoard.getInstance().berechnePosition(15, 10) == 25);
-		assertTrue(GameBoard.getInstance().berechnePosition(20, 10) == 30);
-		assertTrue(GameBoard.getInstance().berechnePosition(27, 10) == 37);
-		assertTrue(GameBoard.getInstance().berechnePosition(36, 10) == 6);
-		assertTrue(GameBoard.getInstance().berechnePosition(30, 10) == 40);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(1, 10) == 11);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(9, 10) == 19);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(15, 10) == 25);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(20, 10) == 30);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(27, 10) == 37);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(36, 10) == 6);
+		assertTrue(GameBoard.getInstance().calculateFieldNumber(30, 10) == 40);
 	}
 	
 	@Test

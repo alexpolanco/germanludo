@@ -6,6 +6,7 @@ import ludo.domainmodel.spieler.SpielerFarbe;
  * Definiert die Richtungen in die sich eine Spielfigur bewegen kann,
  *
  */
+//TODO rename
 public enum Bewegungsrichtung {
 
 	LINKS, RECHTS, OBEN, UNTEN;

@@ -26,6 +26,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import sun.awt.RepaintArea;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import ludo.domainmodel.spielbrett.GameBoard;
 import ludo.domainmodel.spieler.Counter;
@@ -99,17 +100,19 @@ public class SpielbrettGrafik {
 		
 		refresh();
 	}
-	
+
 	/**
-	 * Aktualisiert die Position einer Spielfigur auf dem Spielfeld.
+	 * Updates the location of a {@link Counter} and draws it accordingly on the
+	 * graphical {@link GameBoard}.
 	 */
-	public void zeichneSpielfigur(Counter figur)
+	public void zeichneSpielfigur(Counter counter)
 	{		
-		background.remove(figur.getSpielfigurGrafik());
-		figur.getSpielfigurGrafik().setBounds(figur.getXPosition(), figur.getYPosition(), 50, 50);		
-		background.add(figur.getSpielfigurGrafik());
-		
-		
+		background.remove(counter.getPlayerImage());
+		counter.getPlayerImage().setBounds(
+				((int) counter.getCurrentLocation().getX()),
+				((int) counter.getCurrentLocation().getY()), 50, 50);		
+		background.add(counter.getPlayerImage());
+				
 		refresh();
 	}
 	
@@ -120,19 +123,13 @@ public class SpielbrettGrafik {
 		background.add(spielerName);
 		
 	}
-	
+
 	/**
-	 * Zeigt kurz eine Nachricht an, wenn ein Zug ungültig ist.
+	 * Displays a status message in the status bar.
 	 */
-	public void displayNachricht(String nachricht)
+	public void displayStatusMessage(String message)
 	{
-		JLabel ungueltig = new JLabel(nachricht);
-		ungueltig.setBorder(new LineBorder(Color.RED, 5));
-		ungueltig.setBounds(200, 5, 300, 30);				
-		background.add(ungueltig);
-		
-		background.remove(ungueltig);
-		refresh();
+		throw new NotImplementedException();
 	}
 	
 	/**
