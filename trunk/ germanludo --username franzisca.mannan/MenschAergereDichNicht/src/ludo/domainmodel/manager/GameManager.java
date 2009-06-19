@@ -1,13 +1,6 @@
 package ludo.domainmodel.manager;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 
 import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoard;
@@ -94,12 +87,7 @@ public class GameManager {
 		//Draw player names
 		SpielbrettGrafik.getInstance().drawPlayerNames(PlayerManager.getInstance().getPlayerList());
 		//Draw counters of players
-		for (Player player : PlayerManager.getInstance().getPlayerList())
-		{
-			for (Counter counter : player.getCounters())
-			{
-				SpielbrettGrafik.getInstance().drawCounters();					
-			}
-		}		
+		SpielbrettGrafik.getInstance().drawCounters();					
+		
 	}
 }

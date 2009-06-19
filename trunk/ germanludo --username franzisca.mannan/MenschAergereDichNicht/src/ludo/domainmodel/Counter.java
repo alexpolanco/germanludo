@@ -1,16 +1,10 @@
 package ludo.domainmodel;
 
 import java.awt.Point;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import ludo.domainmodel.*;
-import ludo.ui.SpielbrettGrafik;
 import ludo.ui.controls.FigurenListener;
 
 

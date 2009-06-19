@@ -3,8 +3,6 @@ package ludo.ui.controls;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ludo.domainmodel.Counter;
-import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.manager.CounterManager;
 import ludo.domainmodel.manager.GameManager;
 import ludo.domainmodel.manager.PlayerManager;

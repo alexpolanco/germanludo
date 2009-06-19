@@ -1,17 +1,8 @@
 package ludo.ui;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.MenuBar;
-import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,20 +11,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-
-import sun.awt.RepaintArea;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.Player;
-import ludo.domainmodel.SpielerFarbe;
 import ludo.domainmodel.manager.PlayerManager;
-import ludo.ui.controls.FigurenListener;
 import ludo.ui.controls.MenuItemListener;
 import ludo.ui.controls.WuerfelListener;
 

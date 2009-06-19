@@ -1,6 +1,9 @@
 package ludo.domainmodel.manager;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import ludo.domainmodel.Collision;
 import ludo.domainmodel.Counter;
 import ludo.ui.SpielbrettGrafik;

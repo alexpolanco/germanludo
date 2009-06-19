@@ -6,11 +6,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import ludo.domainmodel.manager.GameManager;
 import ludo.ui.controls.SpielerSetupDialogListener;
 
 /**
