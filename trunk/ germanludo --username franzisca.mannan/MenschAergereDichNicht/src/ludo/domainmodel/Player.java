@@ -141,6 +141,10 @@ public abstract class Player {
 
 	public void setPlayerNameLocation(Point playerNameLocation) {
 		this.playerNameLocation = playerNameLocation;
+	}
+
+	public void setGameBoard(GameBoard gameBoard) {
+		this.gameBoard = gameBoard;
 	}	
 
 	

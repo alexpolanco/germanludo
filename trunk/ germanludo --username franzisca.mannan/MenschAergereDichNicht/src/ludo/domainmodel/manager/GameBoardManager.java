@@ -25,7 +25,7 @@ public class GameBoardManager {
 
 	private static GameBoardManager self = null;
 	// GameBoards of the available players
-	private LinkedList<GameBoard> gameBoards;
+	private LinkedList<GameBoard> gameBoards = new LinkedList<GameBoard>();
 	
 	private GameBoardManager()
 	{
@@ -79,66 +79,67 @@ public class GameBoardManager {
 	 * @throws CounterPositionNotFoundException
 	 * @throws GameBoardNotFoundException
 	 */
-	public Collision collisionDetection(Counter counter) throws CounterPositionNotFoundException, GameBoardNotFoundException
+	public Collision collisionDetection(Counter counter, int futureCounterPosition) throws CounterPositionNotFoundException, GameBoardNotFoundException
 	{
 		// First, determine the GameField where the counter currently resides
 		GameField countersCurrentField = getCounterPosition(counter);
+		
 		// Find  a better solution, such as an empty collision
 		Collision collision = null;
 		
-		if(countersCurrentField != null) {
+		if(countersCurrentField != null) {			
 			/*
 			 * Next check all other GameBoards in order to check, whether our
 			 * current counter collides with any of the other counters
 			 */
 			if(counter.getCounterColor() == SpielerFarbe.ROT) {
 				
-				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getFieldNumber(), 30);					
+				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), futureCounterPosition, 30);					
 				if(collision == null) {
-					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getFieldNumber(), 20);					
+					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), futureCounterPosition, 20);					
 					if(collision == null) {
-						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getFieldNumber(), 10);					
+						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), futureCounterPosition, 10);					
 						if(collision == null) {
-							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getFieldNumber(), 0);					
+							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), futureCounterPosition, 0);					
 						}						
 					}						
 				}									
 			} else if(counter.getCounterColor() == SpielerFarbe.BLAU) {
-				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getFieldNumber(), 0);					
+				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), futureCounterPosition, 0);					
 				if(collision == null) {
-					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getFieldNumber(), 30);					
+					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), futureCounterPosition, 30);					
 					if(collision == null) {
-						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getFieldNumber(), 20);					
+						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), futureCounterPosition, 20);					
 						if(collision == null) {
-							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getFieldNumber(), 10);					
+							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), futureCounterPosition, 10);					
 						}						
 					}						
 				}										
 			} else if(counter.getCounterColor() == SpielerFarbe.GELB) {
-				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getFieldNumber(), 10);					
+				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), futureCounterPosition, 10);					
 				if(collision == null) {
-					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getFieldNumber(), 0);					
+					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), futureCounterPosition, 0);					
 					if(collision == null) {
-						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getFieldNumber(), 30);					
+						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), futureCounterPosition, 30);					
 						if(collision == null) {
-							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getFieldNumber(), 20);					
+							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), futureCounterPosition, 20);					
 						}						
 					}						
 				}										
 			} else if(counter.getCounterColor() == SpielerFarbe.GRUEN) {
-				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), countersCurrentField.getFieldNumber(), 20);					
+				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), futureCounterPosition, 20);					
 				if(collision == null) {
-					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), countersCurrentField.getFieldNumber(), 10);					
+					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), futureCounterPosition, 10);					
 					if(collision == null) {
-						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), countersCurrentField.getFieldNumber(), 0);					
+						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), futureCounterPosition, 0);					
 						if(collision == null) {
-							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), countersCurrentField.getFieldNumber(), 30);					
+							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), futureCounterPosition, 30);					
 						}						
 					}						
 				}										
 			}
 		}
-		return collision;
+		return collision;			
 	}
 
 	
@@ -158,6 +159,8 @@ public class GameBoardManager {
 	{
 		// TODO maybe we only return the GameField ID, rather than the whole
 		// field
+
+		//TODO potential nullpointer exception
 		// Determine the counters owner and retrieve the GameBoard from the
 		// owner (i.e. Player)
 		return counter.getOwningPlayer().getGameBoard().getCounterPosition(counter);

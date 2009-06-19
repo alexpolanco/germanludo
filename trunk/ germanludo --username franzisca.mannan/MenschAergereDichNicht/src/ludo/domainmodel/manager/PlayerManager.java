@@ -9,6 +9,7 @@ import ludo.domainmodel.Counter;
 import ludo.domainmodel.HumanPlayer;
 import ludo.domainmodel.Player;
 import ludo.domainmodel.SpielerFarbe;
+import ludo.domainmodel.spielbrett.GameBoardFactory;
 import ludo.exceptions.InvalidColorException;
 import ludo.ui.SpielbrettGrafik;
 
@@ -24,7 +25,7 @@ public class PlayerManager {
 	private static PlayerManager self = null;
 	
 	// A list of all players actively playing the game
-	private LinkedList<Player> playerList;
+	private LinkedList<Player> playerList = new LinkedList<Player>();
 	
 	// The initial number of players participating in the game
 	private int initialNumberOfPlayers = 0;
@@ -106,6 +107,7 @@ public class PlayerManager {
 	 */
 	public void addNewPlayer(String name, SpielerFarbe color) throws InvalidColorException {
 		Player player = new HumanPlayer(name, color);
+		player.setGameBoard(GameBoardFactory.createGameBoard(player.getPlayerColor()));
 		
 		//Initialize red Player
 		if(color.equals(SpielerFarbe.ROT)) {
