@@ -29,9 +29,9 @@ import sun.awt.RepaintArea;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import ludo.domainmodel.Counter;
+import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.Player;
 import ludo.domainmodel.SpielerFarbe;
-import ludo.domainmodel.spielbrett.GameBoard;
 import ludo.ui.controls.FigurenListener;
 import ludo.ui.controls.MenuItemListener;
 import ludo.ui.controls.WuerfelListener;

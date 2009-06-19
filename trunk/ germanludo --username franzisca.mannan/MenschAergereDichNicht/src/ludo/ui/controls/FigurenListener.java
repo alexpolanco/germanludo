@@ -7,12 +7,12 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 
 import ludo.domainmodel.Counter;
+import ludo.domainmodel.FeldTyp;
+import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.manager.CounterManager;
 import ludo.domainmodel.manager.GameBoardManager;
 import ludo.domainmodel.manager.GameManager;
 import ludo.domainmodel.manager.PlayerManager;
-import ludo.domainmodel.spielbrett.FeldTyp;
-import ludo.domainmodel.spielbrett.GameBoard;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.GameFieldIsOccupiedException;
 import ludo.ui.SpielbrettGrafik;

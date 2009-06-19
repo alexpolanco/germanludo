@@ -1,8 +1,7 @@
-package ludo.domainmodel.spielbrett;
+package ludo.domainmodel;
 
 import java.awt.Color;
 
-import ludo.domainmodel.SpielerFarbe;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 

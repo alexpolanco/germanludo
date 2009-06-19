@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 
 import ludo.domainmodel.Counter;
+import ludo.domainmodel.GameBoardFactory;
 import ludo.domainmodel.HumanPlayer;
 import ludo.domainmodel.Player;
 import ludo.domainmodel.SpielerFarbe;
-import ludo.domainmodel.spielbrett.GameBoardFactory;
 import ludo.exceptions.InvalidColorException;
 import ludo.ui.SpielbrettGrafik;
 

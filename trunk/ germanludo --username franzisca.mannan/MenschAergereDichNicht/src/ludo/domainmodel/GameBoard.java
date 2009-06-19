@@ -1,12 +1,9 @@
-package ludo.domainmodel.spielbrett;
+package ludo.domainmodel;
 
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-import ludo.domainmodel.Collision;
-import ludo.domainmodel.Counter;
-import ludo.domainmodel.SpielerFarbe;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.InvalidIndexException;
 

@@ -7,10 +7,10 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import ludo.domainmodel.Collision;
 import ludo.domainmodel.Counter;
+import ludo.domainmodel.GameBoard;
+import ludo.domainmodel.GameField;
 import ludo.domainmodel.Player;
 import ludo.domainmodel.SpielerFarbe;
-import ludo.domainmodel.spielbrett.GameBoard;
-import ludo.domainmodel.spielbrett.GameField;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.GameBoardNotFoundException;
 import ludo.exceptions.GameFieldIsOccupiedException;
