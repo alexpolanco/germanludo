@@ -177,10 +177,11 @@ public class GameBoardUI {
 		}
 	}
 	
-	public void drawMedals(int x, int y, ImageIcon icon)
+	public void drawMedals(Player player, ImageIcon icon)
 	{		
 		JLabel medal = new JLabel(icon);
-		medal.setBounds(x, y, 100, 100);
+		medal.setBounds((int) player.getMedalLocation().getX(), (int) player
+				.getMedalLocation().getY(), 100, 100);
 		background.add(medal);		
 		refresh();
 	}
