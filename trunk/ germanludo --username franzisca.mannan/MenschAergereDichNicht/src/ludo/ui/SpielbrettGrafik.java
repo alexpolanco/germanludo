@@ -119,7 +119,7 @@ public class SpielbrettGrafik {
 	 */
 	public void displayStatusMessage(String message)
 	{
-		throw new NotImplementedException();
+//		throw new NotImplementedException();
 	}
 	
 	/**
