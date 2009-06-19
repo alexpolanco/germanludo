@@ -1,5 +1,6 @@
 package ludo.ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.LinkedList;
 
@@ -12,38 +13,42 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
 import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.Player;
 import ludo.domainmodel.manager.PlayerManager;
 import ludo.ui.controls.MenuItemListener;
-import ludo.ui.controls.WuerfelListener;
+import ludo.ui.controls.DiceListener;
 
 /**
  *Stellt das Spielbrett grafisch dar
  * 
  */
-public class SpielbrettGrafik {
+public class GameBoardUI {
 
-	private static SpielbrettGrafik self = null;
+	private static Logger log = Logger.getLogger(GameBoardUI.class);
+	private static GameBoardUI self = null;
 	
-	private JMenu spielMenu;
+	private JMenu gameMenu;
 	private JMenuBar menuBar;	
-	private JButton wuerfel;	
+	private JButton dice;	
 	private JPanel background;	
 	private JFrame frame;
+	private JLabel statusBar;
 	
 	
-	public static SpielbrettGrafik getInstance()
+	public static GameBoardUI getInstance()
 	{
 		if(self == null)
 		{
-			self = new SpielbrettGrafik();
+			self = new GameBoardUI();
 		}
 		return self;
 	}
 		
-	public void spielbrettAnzeigen()
+	public void dispplayGameBoard()
 	{
 		frame = new JFrame("Mensch ärgere dich nicht");
 		frame.setMinimumSize(new Dimension(680, 750));
@@ -53,32 +58,34 @@ public class SpielbrettGrafik {
 		background = new ImagePanel("SpielbrettVorlage.jpg");		
 		background.setLayout(null);
 		
-		//Würfel einbinden und einen Listener dran hängen um Ereignisse abzuzfangen
-		wuerfel = new JButton("Würfel");
-		wuerfel.addActionListener(new WuerfelListener());
-		wuerfel.setBounds(292, 320, 75, 75);
-		background.add(wuerfel);
+		//Attach a listener to the dice
+		dice = new JButton("Würfel");
+		dice.addActionListener(new DiceListener());
+		dice.setBounds(292, 320, 75, 75);
+		background.add(dice);
 		
-		//Add menu
+		//Add menu bar
 		menuBar = new JMenuBar();
-		menuBar.setVisible(true);
-		
-		//Hauptmenü
-		spielMenu = new JMenu("Menu");
-		
-		//Menüeinträge
+		menuBar.setVisible(true);		
+		gameMenu = new JMenu("Menu");		
+		// Add menu entrys
 		JMenuItem spielBeenden = new JMenuItem("Spiel beenden");
 		spielBeenden.setActionCommand("Beenden");
-		spielBeenden.addActionListener(new MenuItemListener());
+		spielBeenden.addActionListener(new MenuItemListener());		
+		// Merge menu components
+		gameMenu.add(spielBeenden);
+		menuBar.add(gameMenu);
 		
-		//Komponenten zusammensetzen
-		spielMenu.add(spielBeenden);
-		menuBar.add(spielMenu);
-				
+		//Create Status bar
+		statusBar = new JLabel("Willkommen bei Mensch aergere dich nicht");
+		statusBar.setBackground(Color.GRAY);
+		statusBar.setBackground(Color.red);
+		statusBar.setBounds(1, 680, 680, 25);
+		background.add(statusBar);
+		
 		//Add all components to frame
 		frame.getContentPane().add(background);
 		frame.setJMenuBar(menuBar);
-		
 		refresh();
 	}
 
@@ -88,14 +95,17 @@ public class SpielbrettGrafik {
 	 */
 	public void drawCounters()
 	{		
-		for (Counter counter : PlayerManager.getInstance().getCurrentPlayer().getCounters())
+		for (Player player : PlayerManager.getInstance().getPlayerList())
 		{
-			background.remove(counter.getPlayerImage());
-			counter.getPlayerImage().setBounds(
-					((int) counter.getCurrentLocation().getX()),
-					((int) counter.getCurrentLocation().getY()), 50, 50);		
-			background.add(counter.getPlayerImage());			
-		}				
+			for (Counter counter : player.getCounters())
+			{
+				background.remove(counter.getPlayerImage());
+				counter.getPlayerImage().setBounds(
+						((int) counter.getCurrentLocation().getX()),
+						((int) counter.getCurrentLocation().getY()), 50, 50);		
+				background.add(counter.getPlayerImage());			
+			}							
+		}
 		refresh();
 	}
 	
@@ -104,7 +114,8 @@ public class SpielbrettGrafik {
 	 */
 	public void displayStatusMessage(String message)
 	{
-//		throw new NotImplementedException();
+		this.statusBar.setText(message);
+		refresh();
 	}
 	
 	/**
@@ -112,7 +123,6 @@ public class SpielbrettGrafik {
 	 */
 	public void refresh()
 	{
-		background.setVisible(true);
 		background.repaint();
 		frame.pack();
 		frame.repaint();
@@ -125,17 +135,21 @@ public class SpielbrettGrafik {
 	}
 
 	public String getDiceValue() {
-		return wuerfel.getText();
+		return dice.getText();
 	}
 
 	public void setDiceValue(String wert) {
-		wuerfel.setText(wert);
+		dice.setText(wert);
 	}
 	
+	public JButton getDice() {
+		return dice;
+	}
+
 	/**
 	 * Exits the application.
 	 */
-	public void beenden()
+	public void endGame()
 	{
 		self = null;
 		frame.setVisible(false);
@@ -163,11 +177,11 @@ public class SpielbrettGrafik {
 		}
 	}
 	
-	public void zeichneMedaille(int x, int y, ImageIcon icon)
+	public void drawMedals(int x, int y, ImageIcon icon)
 	{		
-		JLabel medaille = new JLabel(icon);
-		medaille.setBounds(x, y, 100, 100);
-		background.add(medaille);		
+		JLabel medal = new JLabel(icon);
+		medal.setBounds(x, y, 100, 100);
+		background.add(medal);		
 		refresh();
 	}
 }

@@ -3,7 +3,7 @@ package ludo.domainmodel.manager;
 import java.awt.Color;
 import java.awt.Point;
 
-import ludo.domainmodel.Bewegungsrichtung;
+import ludo.domainmodel.MovementDirection;
 import ludo.domainmodel.Collision;
 import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoard;
@@ -11,7 +11,7 @@ import ludo.domainmodel.GameField;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.GameBoardNotFoundException;
 import ludo.exceptions.GameFieldIsOccupiedException;
-import ludo.ui.SpielbrettGrafik;
+import ludo.ui.GameBoardUI;
 
 /**
  * Organizes available {@link Counter}s and offers further functionality in
@@ -55,7 +55,7 @@ public class CounterManager {
 		counter.setCurrentLocation(counter.getStartingZoneLocation());
 		counter.setActive(false);
 		
-		SpielbrettGrafik.getInstance().drawCounters();
+		GameBoardUI.getInstance().drawCounters();
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class CounterManager {
 		if (collision != null) {
 			// Did we collide with a counter of our own team?
 			if (collision.hasSameOwner(counter)) {
-				SpielbrettGrafik.getInstance().displayStatusMessage(
+				GameBoardUI.getInstance().displayStatusMessage(
 						"Eigene Figuren können nicht geschlagen werden.");
 				// TODO play should be allowed to chose a different counter for
 				// moving
@@ -120,7 +120,7 @@ public class CounterManager {
 		if(GameBoardManager.getInstance().getCounterPosition(counterToMove).getFieldNumber() + diceValue > 43)
 		{
 			//The Counter would surpass the last GameField
-			SpielbrettGrafik.getInstance().displayStatusMessage("Spielzug nicht durchführbar.");
+			GameBoardUI.getInstance().displayStatusMessage("Spielzug nicht durchführbar.");
 			//TODO allow the player to move a different counter instead			
 			return;
 			
@@ -138,7 +138,7 @@ public class CounterManager {
 				// Did we collide with a counter of our own team?
 				if(collision.hasSameOwner(counterToMove))
 				{
-					SpielbrettGrafik.getInstance().displayStatusMessage(
+					GameBoardUI.getInstance().displayStatusMessage(
 							"Eigene Figuren können nicht geschlagen werden.");
 					//TODO allow the player to move a different counter instead - maybe by throwing an exception			
 					return;
@@ -183,22 +183,22 @@ public class CounterManager {
 			//Determine current GameField
 			GameField currentField = board.getGameFieldList().get(fieldNumber);
 			
-			if(currentField.getDirectionToNextField() == Bewegungsrichtung.LINKS)
+			if(currentField.getDirectionToNextField() == MovementDirection.LEFT)
 			{
 						currentLocation = new Point((int) currentLocation.getX() - 60,
 						(int) currentLocation.getY());
 			}
-			else if(currentField.getDirectionToNextField() == Bewegungsrichtung.RECHTS)
+			else if(currentField.getDirectionToNextField() == MovementDirection.RIGHT)
 			{
 				currentLocation = new Point((int) currentLocation.getX() + 60,
 						(int) currentLocation.getY());
 			}
-			else if(currentField.getDirectionToNextField() == Bewegungsrichtung.OBEN)
+			else if(currentField.getDirectionToNextField() == MovementDirection.ABOVE)
 			{
 				currentLocation = new Point((int) currentLocation.getX(),
 						(int) currentLocation.getY() - 60);
 			}
-			else if(currentField.getDirectionToNextField() == Bewegungsrichtung.UNTEN)
+			else if(currentField.getDirectionToNextField() == MovementDirection.BELOW)
 			{
 				currentLocation = new Point((int) currentLocation.getX(),
 						(int) currentLocation.getY() + 60);

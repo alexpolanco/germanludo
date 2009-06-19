@@ -10,13 +10,12 @@ import ludo.domainmodel.Counter;
 import ludo.domainmodel.manager.CounterManager;
 import ludo.domainmodel.manager.GameBoardManager;
 import ludo.domainmodel.manager.PlayerManager;
-import ludo.ui.SpielbrettGrafik;
+import ludo.ui.GameBoardUI;
 
-public class FigurenListener implements MouseListener{
+public class CounterListener implements MouseListener{
 
 	public void mouseClicked(MouseEvent arg0) {
 		JLabel label = (JLabel) arg0.getSource();
-		System.out.println("Es wurde eine Spielfigur angeklickt");
 
 		// Position of the label on which the player clicked
 		Point pointOfClick = new Point(label.getX(), label.getY());
@@ -25,7 +24,6 @@ public class FigurenListener implements MouseListener{
 		{
 			for (Counter counter : PlayerManager.getInstance().getCurrentPlayer().getCounters())
 			{
-				System.out.println("Current distance between Counter and point: " + pointOfClick.distance(counter.getCurrentLocation()));
 				/*
 				 * Does any of the counter's location match the point on which the
 				 * player clicked?
@@ -34,7 +32,7 @@ public class FigurenListener implements MouseListener{
 				{
 					// Check whether a 6 was diced and whether the counter is in the
 					// starting zone
-					if (Integer.valueOf(SpielbrettGrafik.getInstance()
+					if (Integer.valueOf(GameBoardUI.getInstance()
 							.getDiceValue()) == 6
 							&& !GameBoardManager.getInstance().getIsCounterOnGameBoard(counter))
 					{
@@ -46,18 +44,22 @@ public class FigurenListener implements MouseListener{
 					{
 						CounterManager.getInstance().processCounterMovement(
 								counter,
-								Integer.valueOf(SpielbrettGrafik.getInstance()
+								Integer.valueOf(GameBoardUI.getInstance()
 										.getDiceValue()));						
 					}
 					
-					if(Integer.valueOf(SpielbrettGrafik.getInstance().getDiceValue()) != 6)
+					if(Integer.valueOf(GameBoardUI.getInstance().getDiceValue()) != 6)
 					{						
 						//Nächster Spieler ist an der Reihe
 						PlayerManager.getInstance().switchActivePlayer();
+						GameBoardUI.getInstance().getDice().setEnabled(true);
 					}
 					else
 					{
-						SpielbrettGrafik.getInstance().displayStatusMessage("Der Spieler darf noch einmal würfeln");
+						//Reset dice value
+						GameBoardUI.getInstance().setDiceValue("Würfel");
+						GameBoardUI.getInstance().getDice().setEnabled(true);
+						GameBoardUI.getInstance().displayStatusMessage("@Spieler " + PlayerManager.getInstance().getCurrentPlayer().getPlayerName() +  " : Sie dürfen noch einmal würfeln");
 					}
 					
 				}

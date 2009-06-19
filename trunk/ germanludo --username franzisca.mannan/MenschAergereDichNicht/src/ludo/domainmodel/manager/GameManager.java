@@ -5,10 +5,10 @@ import javax.swing.JDialog;
 import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.Player;
-import ludo.domainmodel.SpielerFarbe;
+import ludo.domainmodel.PlayerColor;
 import ludo.exceptions.InvalidColorException;
-import ludo.ui.SpielbrettGrafik;
-import ludo.ui.SpielerSetupDialog;
+import ludo.ui.GameBoardUI;
+import ludo.ui.PlayerSetupDialog;
 
 /**
  * Organizes and manages the game from beginning till end.
@@ -32,9 +32,9 @@ public class GameManager {
 	
 	public static void main (String [] args)
 	{
-		SpielbrettGrafik.getInstance().spielbrettAnzeigen();
+		GameBoardUI.getInstance().dispplayGameBoard();
 
-		JDialog playerSelectionDialog = new SpielerSetupDialog(SpielbrettGrafik
+		JDialog playerSelectionDialog = new PlayerSetupDialog(GameBoardUI
 				.getInstance().getFrame(), "Spielerauswahl");
 		
 	}
@@ -66,28 +66,28 @@ public class GameManager {
 	{
 		try {
 			if(!redName.equals(""))
-				PlayerManager.getInstance().addNewPlayer(redName, SpielerFarbe.ROT);
+				PlayerManager.getInstance().addNewPlayer(redName, PlayerColor.RED);
 			if(!blueName.equals(""))
-				PlayerManager.getInstance().addNewPlayer(blueName, SpielerFarbe.BLAU);
+				PlayerManager.getInstance().addNewPlayer(blueName, PlayerColor.BLUE);
 			if(!yellowName.equals(""))
-				PlayerManager.getInstance().addNewPlayer(yellowName, SpielerFarbe.GELB);
+				PlayerManager.getInstance().addNewPlayer(yellowName, PlayerColor.YELLOW);
 			if(!greenName.equals(""))				
-				PlayerManager.getInstance().addNewPlayer(greenName, SpielerFarbe.GRUEN);			
+				PlayerManager.getInstance().addNewPlayer(greenName, PlayerColor.GREEN);			
 	
 			drawPlayerNamesAndCounters();
 			
 		} catch (InvalidColorException e) {
 			//TODO log statement required
-			SpielbrettGrafik.getInstance().displayStatusMessage("Error during Game initialization - invalid color");
+			GameBoardUI.getInstance().displayStatusMessage("Fehler während der Spielinitialisierung - bitte starten sie das spiel neu.");
 		}
 	}
 	
 	private void drawPlayerNamesAndCounters()
 	{
 		//Draw player names
-		SpielbrettGrafik.getInstance().drawPlayerNames(PlayerManager.getInstance().getPlayerList());
+		GameBoardUI.getInstance().drawPlayerNames(PlayerManager.getInstance().getPlayerList());
 		//Draw counters of players
-		SpielbrettGrafik.getInstance().drawCounters();					
+		GameBoardUI.getInstance().drawCounters();					
 		
 	}
 }

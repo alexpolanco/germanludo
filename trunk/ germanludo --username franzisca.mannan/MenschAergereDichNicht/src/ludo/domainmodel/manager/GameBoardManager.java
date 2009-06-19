@@ -8,11 +8,11 @@ import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.GameField;
 import ludo.domainmodel.Player;
-import ludo.domainmodel.SpielerFarbe;
+import ludo.domainmodel.PlayerColor;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.GameBoardNotFoundException;
 import ludo.exceptions.GameFieldIsOccupiedException;
-import ludo.ui.SpielbrettGrafik;
+import ludo.ui.GameBoardUI;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -59,7 +59,7 @@ public class GameBoardManager {
 		{
 			// check the GameField which complies to the position of the other
 			// GameField and whether its occupied
-			GameField feld = boardToCompare.getGameFieldList().get(((position + offset) % 40));
+			GameField feld = boardToCompare.getGameFieldList().get(((position + offset) % 39));
 			
 			if(feld.isOccupied())
 			{
@@ -87,53 +87,53 @@ public class GameBoardManager {
 		// Find  a better solution, such as an empty collision
 		Collision collision = null;
 		
-		if(countersCurrentField != null) {			
+		if(countersCurrentField != null || futureCounterPosition == 0) {			
 			/*
 			 * Next check all other GameBoards in order to check, whether our
 			 * current counter collides with any of the other counters
 			 */
-			if(counter.getCounterColor() == SpielerFarbe.ROT) {
+			if(counter.getCounterColor() == PlayerColor.RED) {
 				
-				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), futureCounterPosition, 30);					
+				collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.BLUE), futureCounterPosition, 30);					
 				if(collision == null) {
-					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), futureCounterPosition, 20);					
+					collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.YELLOW), futureCounterPosition, 20);					
 					if(collision == null) {
-						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), futureCounterPosition, 10);					
+						collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.GREEN), futureCounterPosition, 10);					
 						if(collision == null) {
-							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), futureCounterPosition, 0);					
+							collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.RED), futureCounterPosition, 0);					
 						}						
 					}						
 				}									
-			} else if(counter.getCounterColor() == SpielerFarbe.BLAU) {
-				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), futureCounterPosition, 0);					
+			} else if(counter.getCounterColor() == PlayerColor.BLUE) {
+				collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.BLUE), futureCounterPosition, 0);					
 				if(collision == null) {
-					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), futureCounterPosition, 30);					
+					collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.YELLOW), futureCounterPosition, 30);					
 					if(collision == null) {
-						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), futureCounterPosition, 20);					
+						collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.GREEN), futureCounterPosition, 20);					
 						if(collision == null) {
-							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), futureCounterPosition, 10);					
+							collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.RED), futureCounterPosition, 10);					
 						}						
 					}						
 				}										
-			} else if(counter.getCounterColor() == SpielerFarbe.GELB) {
-				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), futureCounterPosition, 10);					
+			} else if(counter.getCounterColor() == PlayerColor.YELLOW) {
+				collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.BLUE), futureCounterPosition, 10);					
 				if(collision == null) {
-					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), futureCounterPosition, 0);					
+					collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.YELLOW), futureCounterPosition, 0);					
 					if(collision == null) {
-						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), futureCounterPosition, 30);					
+						collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.GREEN), futureCounterPosition, 30);					
 						if(collision == null) {
-							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), futureCounterPosition, 20);					
+							collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.RED), futureCounterPosition, 20);					
 						}						
 					}						
 				}										
-			} else if(counter.getCounterColor() == SpielerFarbe.GRUEN) {
-				collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.BLAU), futureCounterPosition, 20);					
+			} else if(counter.getCounterColor() == PlayerColor.GREEN) {
+				collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.BLUE), futureCounterPosition, 20);					
 				if(collision == null) {
-					collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GELB), futureCounterPosition, 10);					
+					collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.YELLOW), futureCounterPosition, 10);					
 					if(collision == null) {
-						collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.GRUEN), futureCounterPosition, 0);					
+						collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.GREEN), futureCounterPosition, 0);					
 						if(collision == null) {
-							collision = collisionDetectionCalculation( getGameBoardByColor(SpielerFarbe.ROT), futureCounterPosition, 30);					
+							collision = collisionDetectionCalculation( getGameBoardByColor(PlayerColor.RED), futureCounterPosition, 30);					
 						}						
 					}						
 				}										
@@ -188,7 +188,7 @@ public class GameBoardManager {
 	 * 
 	 * @throws GameBoardNotFoundException
 	 */
-	public GameBoard getGameBoardByColor(SpielerFarbe farbe) throws GameBoardNotFoundException
+	public GameBoard getGameBoardByColor(PlayerColor farbe) throws GameBoardNotFoundException
 	{
 		// Check whether the player is still in the game
 		for(Player player : PlayerManager.getInstance().getPlayerList())
@@ -228,7 +228,7 @@ public class GameBoardManager {
 			// If the GameField is not occupied, place the counter there
 			counter.getOwningPlayer().getGameBoard().getGameFieldList().get(fieldNumber).setIsOccupiedBy(counter);
 			counter.setActive(true);
-			SpielbrettGrafik.getInstance().drawCounters();					
+			GameBoardUI.getInstance().drawCounters();					
 
 		} else {
 			throw new GameFieldIsOccupiedException("The GameField on which the Counter should be placed is already occupied by another counter.");			

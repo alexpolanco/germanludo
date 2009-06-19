@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import ludo.domainmodel.manager.GameManager;
-import ludo.ui.SpielbrettGrafik;
-import ludo.ui.SpielerSetupDialog;
+import ludo.ui.GameBoardUI;
+import ludo.ui.PlayerSetupDialog;
 
-public class SpielerSetupDialogListener implements ActionListener{
+public class PlayerSetupDialogListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -19,7 +19,7 @@ public class SpielerSetupDialogListener implements ActionListener{
 		{
 			// Initialize the game
 			JButton okButton = (JButton)e.getSource();
-			SpielerSetupDialog parent = (SpielerSetupDialog)okButton.getParent().getParent().getParent().getParent();
+			PlayerSetupDialog parent = (PlayerSetupDialog)okButton.getParent().getParent().getParent().getParent();
 		
 			GameManager.getInstance().initializePlayers(
 					parent.getRoterSpielerName(),
@@ -33,7 +33,7 @@ public class SpielerSetupDialogListener implements ActionListener{
 		}
 		else if(source.equals("Beenden"))
 		{
-			SpielbrettGrafik.getInstance().beenden();
+			GameBoardUI.getInstance().endGame();
 		}
 		
 	}

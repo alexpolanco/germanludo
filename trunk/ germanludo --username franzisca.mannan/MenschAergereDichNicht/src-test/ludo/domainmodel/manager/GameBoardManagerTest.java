@@ -4,8 +4,8 @@ package ludo.domainmodel.manager;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import ludo.domainmodel.Player;
-import ludo.domainmodel.SpielerFarbe;
-import ludo.ui.SpielbrettGrafik;
+import ludo.domainmodel.PlayerColor;
+import ludo.ui.GameBoardUI;
 
 import org.apache.commons.lang.math.IntRange;
 import org.junit.Before;
@@ -16,7 +16,7 @@ public class GameBoardManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		// Draw player names and counters
-		SpielbrettGrafik.getInstance().spielbrettAnzeigen();
+		GameBoardUI.getInstance().dispplayGameBoard();
 		//Create initial setup
 		GameManager.getInstance().initializePlayers("Red Player", "Blue Player", "Yellow Player", "");
 		
@@ -33,9 +33,9 @@ public class GameBoardManagerTest {
 		for (Player player : PlayerManager.getInstance().getPlayerList())
 		{
 			// Only players with the following color have been initialized
-			assertTrue(player.getPlayerColor() == SpielerFarbe.ROT
-					|| player.getPlayerColor() == SpielerFarbe.BLAU
-					|| player.getPlayerColor() == SpielerFarbe.GELB);
+			assertTrue(player.getPlayerColor() == PlayerColor.RED
+					|| player.getPlayerColor() == PlayerColor.BLUE
+					|| player.getPlayerColor() == PlayerColor.YELLOW);
 			assertFalse(player.hasActiveCounters());
 			//Make sure that every player has 4 counters
 			assertTrue(player.getCounters().size() == 4);			

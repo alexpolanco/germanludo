@@ -5,13 +5,15 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
+import org.apache.log4j.Logger;
+
 import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoardFactory;
 import ludo.domainmodel.HumanPlayer;
 import ludo.domainmodel.Player;
-import ludo.domainmodel.SpielerFarbe;
+import ludo.domainmodel.PlayerColor;
 import ludo.exceptions.InvalidColorException;
-import ludo.ui.SpielbrettGrafik;
+import ludo.ui.GameBoardUI;
 
 /**
  * Handles {@link Player}-related tasks and administers a {@link LinkedList} of
@@ -22,6 +24,7 @@ import ludo.ui.SpielbrettGrafik;
  */
 public class PlayerManager {
 
+	private static Logger log = Logger.getLogger(PlayerManager.class);
 	private static PlayerManager self = null;
 	
 	// A list of all players actively playing the game
@@ -62,9 +65,7 @@ public class PlayerManager {
 	 */
 	public void switchActivePlayer() {
 		playerList.add(playerList.pollFirst());
-		SpielbrettGrafik.getInstance().displayStatusMessage(
-				"Spieler " + playerList.peekFirst().getPlayerName()
-						+ " ist an der Reihe.");
+		GameBoardUI.getInstance().displayStatusMessage("@Spieler " + playerList.peekFirst().getPlayerName() +  " : Sie sind an der Reihe");
 	}
 
 	/**
@@ -105,12 +106,13 @@ public class PlayerManager {
 	 * and also adds and initializes all four {@link Counter}s to it.
 	 * @throws InvalidColorException 
 	 */
-	public void addNewPlayer(String name, SpielerFarbe color) throws InvalidColorException {
+	public void addNewPlayer(String name, PlayerColor color) throws InvalidColorException {
 		Player player = new HumanPlayer(name, color);
 		player.setGameBoard(GameBoardFactory.createGameBoard(player.getPlayerColor()));
 		
 		//Initialize red Player
-		if(color.equals(SpielerFarbe.ROT)) {
+		if(color.equals(PlayerColor.RED)) {
+			log.debug("Initializing red player named " + name + " with the color " + color.toString());
 			player.setStartFieldLocation(new Point(365, 15));
 			player.setPlayerNameLocation(new Point(475, 30));
 			LinkedList<Counter> counters = new LinkedList<Counter>();
@@ -119,7 +121,8 @@ public class PlayerManager {
 			counters.add(new Counter(new Point(470, 70), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
 			counters.add(new Counter(new Point(470, 130), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
 			player.setCounters(counters);
-		} else if(color.equals(SpielerFarbe.BLAU)) {
+		} else if(color.equals(PlayerColor.BLUE)) {
+			log.debug("Initializing red player named " + name + " with the color " + color.toString());
 			player.setStartFieldLocation(new Point(605, 375));
 			player.setPlayerNameLocation(new Point(475, 505));
 			LinkedList<Counter> counters = new LinkedList<Counter>();
@@ -128,7 +131,8 @@ public class PlayerManager {
 			counters.add(new Counter(new Point(475, 550), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerBlau.png"))));
 			counters.add(new Counter(new Point(475, 620), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerBlau.png"))));
 			player.setCounters(counters);
-		} else if(color.equals(SpielerFarbe.GELB)) {
+		} else if(color.equals(PlayerColor.YELLOW)) {
+			log.debug("Initializing red player named " + name + " with the color " + color.toString());
 			player.setStartFieldLocation(new Point(245, 620));
 			player.setPlayerNameLocation(new Point(30, 505));
 			LinkedList<Counter> counters = new LinkedList<Counter>();
@@ -137,7 +141,8 @@ public class PlayerManager {
 			counters.add(new Counter(new Point(120, 550), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
 			counters.add(new Counter(new Point(50, 615), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
 			player.setCounters(counters);
-		} else if(color.equals(SpielerFarbe.GRUEN)) {
+		} else if(color.equals(PlayerColor.GREEN)) {
+			log.debug("Initializing red player named " + name + " with the color " + color.toString());
 			player.setStartFieldLocation(new Point(5, 260));
 			player.setPlayerNameLocation(new Point(30, 30));
 			LinkedList<Counter> counters = new LinkedList<Counter>();

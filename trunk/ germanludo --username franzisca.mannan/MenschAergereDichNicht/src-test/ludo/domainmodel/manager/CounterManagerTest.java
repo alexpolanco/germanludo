@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import ludo.domainmodel.Collision;
 import ludo.domainmodel.Counter;
-import ludo.ui.SpielbrettGrafik;
+import ludo.ui.GameBoardUI;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class CounterManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		SpielbrettGrafik.getInstance().spielbrettAnzeigen();
+		GameBoardUI.getInstance().dispplayGameBoard();
 		//Create initial setup
 		GameManager.getInstance().initializePlayers("Red Player", "Blue Player", "Yellow Player", "");
 		
