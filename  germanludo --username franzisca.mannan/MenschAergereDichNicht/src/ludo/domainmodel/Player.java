@@ -3,7 +3,6 @@ package ludo.domainmodel;
 import java.awt.Point;
 import java.util.LinkedList;
 
-import ludo.domainmodel.spielbrett.GameBoard;
 
 /**
  * Play class unites common behavior and attributes of human and ai

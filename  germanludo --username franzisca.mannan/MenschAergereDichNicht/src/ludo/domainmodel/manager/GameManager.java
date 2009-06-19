@@ -10,9 +10,9 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import ludo.domainmodel.Counter;
+import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.Player;
 import ludo.domainmodel.SpielerFarbe;
-import ludo.domainmodel.spielbrett.GameBoard;
 import ludo.exceptions.InvalidColorException;
 import ludo.ui.SpielbrettGrafik;
 import ludo.ui.SpielerSetupDialog;

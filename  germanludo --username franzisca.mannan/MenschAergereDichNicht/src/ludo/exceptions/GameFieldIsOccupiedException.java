@@ -1,6 +1,6 @@
 package ludo.exceptions;
 
-import ludo.domainmodel.spielbrett.GameField;
+import ludo.domainmodel.GameField;
 
 /**
  * Is thrown, if a {@link GameField} is unexpectedly occupied.
