@@ -3,6 +3,9 @@ package ludo.domainmodel;
 import java.awt.Point;
 import java.util.LinkedList;
 
+import ludo.domainmodel.manager.GameBoardManager;
+import ludo.exceptions.CounterPositionNotFoundException;
+
 
 /**
  * Play class unites common behavior and attributes of human and ai
@@ -84,14 +87,18 @@ public abstract class Player {
 	 * method returns true the {@link Player} has obviously completed the game,
 	 * can be given a medal and be removed from the list of active
 	 * {@link Player}s.
+	 * @throws CounterPositionNotFoundException 
 	 */
-	public boolean hasAllCountersInHomeZone()
+	public boolean hasAllCountersInHomeZone() throws CounterPositionNotFoundException
 	{
-		if(getCounters().size() == 0)
+		for (Counter counter : getCounters())
 		{
-			return true;	
+			if(!GameBoardManager.getInstance().getCounterPosition(counter).getFieldType().equals(FieldType.HOMEFIELD))
+			{
+				return false;
+			}
 		}
-		return false;
+		return true;
 	}
 
 	public LinkedList<Counter> getCounters() {
@@ -135,7 +142,7 @@ public abstract class Player {
 	}
 
 	public void setStartFieldLocation(Point startFieldLocation) {
-		this.startFieldLocation = startFieldLocation;
+		this.startFieldLocation = this.medalLocation = startFieldLocation;
 	}
 
 	public void setPlayerNameLocation(Point playerNameLocation) {

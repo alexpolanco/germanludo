@@ -12,7 +12,9 @@ import ludo.domainmodel.GameBoardFactory;
 import ludo.domainmodel.HumanPlayer;
 import ludo.domainmodel.Player;
 import ludo.domainmodel.PlayerColor;
+import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.InvalidColorException;
+import ludo.exceptions.NoMoreMedalsException;
 import ludo.ui.GameBoardUI;
 
 /**
@@ -45,6 +47,10 @@ public class PlayerManager {
 	
 	public LinkedList<Player> getPlayerList() {
 		return playerList;
+	}
+
+	public int getInitialNumberOfPlayers() {
+		return initialNumberOfPlayers;
 	}
 
 	/**
@@ -156,5 +162,61 @@ public class PlayerManager {
 		}		
 		playerList.add(player);
 		initialNumberOfPlayers++;
+	}
+
+	/**
+	 * Returns true, if the {@link Player} has all his {@link Counter}s in his
+	 * home zone and false otherwise.
+	 */
+	public boolean hasCompletedGame(Player player)
+	{
+		try {
+			return player.hasAllCountersInHomeZone();
+		} catch (CounterPositionNotFoundException e) {
+			log.debug("Error while figuring out, whether the Player has all counters in his home zone.");
+		}
+		return false;
+	}
+
+	/**
+	 * Removes a given player from the list of active players and gives him a
+	 * medal, according to the position he reached.
+	 */
+	public void grantMedal(Player player)
+	{
+		//Draw his medal
+		try {
+			GameBoardUI.getInstance().drawMedals(player, determineMedal());
+
+		} catch (NoMoreMedalsException e) {
+			log.debug("All medals have been given away already - the game is at an end");
+			// TODO display rankling
+		}
+
+		// Remove player from list of active players but keep his counters on
+		// the field		
+		getPlayerList().remove(player);		
+	}
+	
+	private ImageIcon determineMedal() throws NoMoreMedalsException
+	{
+		int medal = getInitialNumberOfPlayers() - PlayerManager.getInstance().getPlayerList().size();
+		
+		switch(medal)
+		{
+			case 0: 
+			{
+				return new ImageIcon(this.getClass().getResource("gold.jpg"));			
+			}
+			case 1: 
+			{
+				return new ImageIcon(this.getClass().getResource("silver.jpg"));			
+			}
+			case 2: 
+			{
+				return new ImageIcon(this.getClass().getResource("bronze.jpg"));			
+			}
+		}
+		throw new NoMoreMedalsException("All medals have been given to players already");
 	}
 }

@@ -167,7 +167,12 @@ public class CounterManager {
 							+ diceValue);							
 			
 			//Remove counter from his current GameField
-			GameBoardManager.getInstance().getCounterPosition(counterToMove).setIsOccupiedBy(null);				
+			GameBoardManager.getInstance().getCounterPosition(counterToMove).setIsOccupiedBy(null);
+
+			/*
+			 * Check, whether the current player has navigated all his counters
+			 * into his home zone.
+			 */
 		}	
 	}
 
