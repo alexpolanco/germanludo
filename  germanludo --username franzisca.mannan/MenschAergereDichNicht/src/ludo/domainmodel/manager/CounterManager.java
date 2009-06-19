@@ -173,6 +173,10 @@ public class CounterManager {
 			 * Check, whether the current player has navigated all his counters
 			 * into his home zone.
 			 */
+			if(PlayerManager.getInstance().hasCompletedGame(counterToMove.getOwningPlayer()))
+			{
+				PlayerManager.getInstance().grantMedal(counterToMove.getOwningPlayer());
+			}
 		}	
 	}
 

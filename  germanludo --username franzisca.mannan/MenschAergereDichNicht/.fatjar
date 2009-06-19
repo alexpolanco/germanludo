@@ -1,12 +1,12 @@
 #Fat Jar Configuration File
-#Tue Jun 16 20:07:56 CEST 2009
+#Fri Jun 19 18:48:21 CEST 2009
 onejar.license.required=false
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=true
-jarname=/home/fmannan/workspace/java/MenschAergereDichNicht/MenschAergereDichNicht.jar
+jarname=/home/fmannan/Desktop/ludo.jar
 manifest.mergeall=true
-manifest.mainclass=ludo.main.SpielManager
+manifest.mainclass=ludo.domainmodel.manager.GameManager
 manifest.file=<createnew>
 jarname.isextern=true
 onejar.expand=
