@@ -1,7 +1,5 @@
 package ludo.domainmodel;
 
-import java.util.LinkedList;
-
 import ludo.exceptions.CounterPositionNotFoundException;
 
 /**

@@ -3,8 +3,6 @@ package ludo.domainmodel.manager;
 import java.awt.Color;
 import java.util.LinkedList;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import ludo.domainmodel.Collision;
 import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoard;
@@ -14,8 +12,8 @@ import ludo.domainmodel.SpielerFarbe;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.GameBoardNotFoundException;
 import ludo.exceptions.GameFieldIsOccupiedException;
-import ludo.exceptions.InvalidIndexException;
 import ludo.ui.SpielbrettGrafik;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Organizes available {@link GameBoard}s.

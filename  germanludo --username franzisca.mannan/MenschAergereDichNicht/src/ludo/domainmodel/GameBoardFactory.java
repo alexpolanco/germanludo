@@ -2,9 +2,6 @@ package ludo.domainmodel;
 
 import java.awt.Color;
 
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 /**
  * Creates a {@link GameBoard} and initializes it.
  * 

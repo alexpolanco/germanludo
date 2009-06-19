@@ -2,12 +2,6 @@ package ludo.domainmodel.manager;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
-
-import com.sun.org.apache.xpath.internal.operations.Div;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import ludo.domainmodel.Bewegungsrichtung;
 import ludo.domainmodel.Collision;

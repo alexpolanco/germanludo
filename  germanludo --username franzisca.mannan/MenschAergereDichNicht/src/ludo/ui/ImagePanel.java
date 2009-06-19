@@ -1,5 +1,7 @@
 package ludo.ui;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 
 /** 
@@ -7,14 +9,11 @@ import java.awt.*;
  */
 public class ImagePanel extends javax.swing.JPanel 
 {	
-		private String pfadOfImage = null;
-		private Image image = null;
+	private Image image = null;
 		
 	public ImagePanel(String imagePfad) {
 		super();
-	
-		pfadOfImage = imagePfad;
-	
+		
 		image = Toolkit.getDefaultToolkit().createImage(this.getClass().getResource("SpielbrettVorlage.jpg"));
 	}
 	

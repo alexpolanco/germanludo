@@ -2,10 +2,8 @@ package ludo.domainmodel;
 
 import java.awt.Color;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 
 import ludo.exceptions.CounterPositionNotFoundException;
-import ludo.exceptions.InvalidIndexException;
 
 /**
  * A {@link GameBoard} exists for each player and contains 44 GameFields. A
@@ -14,8 +12,6 @@ import ludo.exceptions.InvalidIndexException;
  * 
  */
 public class GameBoard {
-
-	private static GameBoard self = null;
 	
 	//The list of GameFields represents the GameBoard on which the player moves
 	private LinkedList<GameField> fieldList = new LinkedList<GameField>();
