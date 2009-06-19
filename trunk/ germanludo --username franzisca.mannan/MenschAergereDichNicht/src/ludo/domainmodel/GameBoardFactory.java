@@ -56,7 +56,7 @@ public class GameBoardFactory {
 			} else if (color.equals(SpielerFarbe.BLAU)) {
 				if(i == 0)
 					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.LINKS));					
-				else if(i  > 39 && i < 43)
+				else if(i  > 39 && i < 44)
 					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.LINKS));					
 				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.LINKS));					
@@ -70,7 +70,7 @@ public class GameBoardFactory {
 			} else if (color.equals(SpielerFarbe.GELB)) {
 				if(i == 0)
 					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.OBEN));					
-				else if(i  > 39 && i < 43)
+				else if(i  > 39 && i < 44)
 					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.OBEN));					
 				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.OBEN));					
@@ -84,7 +84,7 @@ public class GameBoardFactory {
 			} else if (color.equals(SpielerFarbe.GRUEN)) {
 				if(i == 0)
 					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.RECHTS));					
-				else if(i  > 39 && i < 43)
+				else if(i  > 39 && i < 44)
 					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.RECHTS));					
 				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.RECHTS));					

@@ -47,7 +47,7 @@ public class WuerfelListener implements ActionListener {
 				// automatically
 				if(!PlayerManager.getInstance().getCurrentPlayer().hasActiveCounters()) {
 					try {
-						CounterManager.getInstance().placeCounterOnStartField(
+						CounterManager.getInstance().moveCounterToStartField(
 								PlayerManager.getInstance().getCurrentPlayer()
 										.getCounters().getFirst());
 						

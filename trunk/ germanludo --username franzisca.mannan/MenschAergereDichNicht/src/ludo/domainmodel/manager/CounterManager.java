@@ -37,13 +37,14 @@ public class CounterManager {
 		return self;
 	}
 
+
 	/**
 	 * Puts a given {@link Counter} into the starting zone location, which was
 	 * originally defined for him. Furthermore it removes the {@link Counter}
 	 * from his current {@link GameField} and updates the {@link Counter}
 	 * location on the graphical {@link GameBoard}.
 	 */
-	public void placeCounterInStartingZone(Counter counter) {
+	public void moveCounterToStartingZone(Counter counter) {
 		/*
 		 * Check, whether the counter is already in game, if yes, we'll remove
 		 * him from his current GameField and afterwards place him in the
@@ -59,9 +60,10 @@ public class CounterManager {
 		}
 		counter.setCurrentLocation(counter.getStartingZoneLocation());
 		counter.setActive(false);
-		SpielbrettGrafik.getInstance().zeichneSpielfigur(counter);
+		
+		SpielbrettGrafik.getInstance().drawCounters();
 	}
-
+	
 	/**
 	 * Places a given {@link Counter} on his {@link Color}s start field, hence:
 	 * puts him into the actual game.
@@ -78,7 +80,7 @@ public class CounterManager {
 	 * @throws GameFieldIsOccupiedException
 	 * @throws GameBoardNotFoundException
 	 */
-	public void placeCounterOnStartField(Counter counter)
+	public void moveCounterToStartField(Counter counter)
 			throws CounterPositionNotFoundException,
 			GameFieldIsOccupiedException, GameBoardNotFoundException 
 	{
@@ -98,14 +100,13 @@ public class CounterManager {
 				 * Remove colliding counter from his GameField and place him in
 				 * his starting zone.
 				 */
-				placeCounterInStartingZone(collision.getCollidingCounter());
+				moveCounterToStartingZone(collision.getCollidingCounter());
 			}
 		}
 		// Update the location of our current counter
 		counter.setCurrentLocation(counter.getOwningPlayer()
 				.getStartFieldLocation());
 		GameBoardManager.getInstance().placeCounterOnGameField(counter, 0);
-		counter.setActive(true);
 	}
 
 	/**
@@ -154,7 +155,7 @@ public class CounterManager {
 					 * Remove colliding counter from his GameField and place him in
 					 * his starting zone.
 					 */
-					placeCounterInStartingZone(collision.getCollidingCounter());				
+					moveCounterToStartingZone(collision.getCollidingCounter());				
 				}
 			}
 			//Calculate new Location

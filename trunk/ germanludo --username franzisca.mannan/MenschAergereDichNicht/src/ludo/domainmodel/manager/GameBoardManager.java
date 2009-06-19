@@ -56,17 +56,19 @@ public class GameBoardManager {
 	 */
 	private Collision collisionDetectionCalculation(GameBoard boardToCompare, int position, int offset)
 	{
-		//check the GameField which complies to the position of the other GameField and whether its occupied
-		GameField feld = boardToCompare.getGameFieldList().get(((position + offset) % 40));
-		
-		if(feld.isOccupied())
+		// Check whether the GameBoard is null - if so, skip
+		if(boardToCompare != null)
 		{
-			return new Collision(boardToCompare, feld.getFieldNumber());
+			// check the GameField which complies to the position of the other
+			// GameField and whether its occupied
+			GameField feld = boardToCompare.getGameFieldList().get(((position + offset) % 40));
+			
+			if(feld.isOccupied())
+			{
+				return new Collision(boardToCompare, feld.getFieldNumber());
+			}
 		}
-		else
-		{
-			return null;
-		}					
+		return null;
 	}
 
 	/**
@@ -190,6 +192,7 @@ public class GameBoardManager {
 	 */
 	public GameBoard getGameBoardByColor(SpielerFarbe farbe) throws GameBoardNotFoundException
 	{
+		// Check whether the player is still in the game
 		for(Player player : PlayerManager.getInstance().getPlayerList())
 		{
 			if(player.getPlayerColor().equals(farbe))
@@ -197,7 +200,8 @@ public class GameBoardManager {
 				return player.getGameBoard();	
 			}			
 		}
-		throw new GameBoardNotFoundException("No GameBoard of the color " + farbe.toString() + " was found.");
+		//TODO Log statement
+		return null;
 	}
 
 	public LinkedList<GameBoard> getGameBoards() {
@@ -225,7 +229,8 @@ public class GameBoardManager {
 		{
 			// If the GameField is not occupied, place the counter there
 			counter.getOwningPlayer().getGameBoard().getGameFieldList().get(fieldNumber).setIsOccupiedBy(counter);
-			SpielbrettGrafik.getInstance().zeichneSpielfigur(counter);					
+			counter.setActive(true);
+			SpielbrettGrafik.getInstance().drawCounters();					
 
 		} else {
 			throw new GameFieldIsOccupiedException("The GameField on which the Counter should be placed is already occupied by another counter.");			
