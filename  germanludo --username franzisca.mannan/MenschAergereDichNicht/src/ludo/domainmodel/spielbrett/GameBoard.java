@@ -21,7 +21,7 @@ public class GameBoard {
 	private static GameBoard self = null;
 	
 	//The list of GameFields represents the GameBoard on which the player moves
-	private LinkedList<GameField> fieldList;
+	private LinkedList<GameField> fieldList = new LinkedList<GameField>();
 	
 	public GameBoard()
 	{		
@@ -72,7 +72,9 @@ public class GameBoard {
 				return field;
 			}
 		}
-		throw new CounterPositionNotFoundException("The " + figur.getCounterColor().toString() + " Counter could not be found on this GameBoard");
+		return null;
+		//TODO use exception instead of null?
+//		throw new CounterPositionNotFoundException("The " + figur.getCounterColor().toString() + " Counter could not be found on this GameBoard");
 	}
 
 	/**

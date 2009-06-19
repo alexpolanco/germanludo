@@ -73,6 +73,9 @@ public class GameManager {
 	{
 		try {
 			PlayerManager.getInstance().addNewPlayer(redName, SpielerFarbe.ROT);
+			PlayerManager.getInstance().addNewPlayer(blueName, SpielerFarbe.BLAU);
+			PlayerManager.getInstance().addNewPlayer(yellowName, SpielerFarbe.GELB);
+			PlayerManager.getInstance().addNewPlayer(greenName, SpielerFarbe.GRUEN);
 			
 			//Draw player names
 			SpielbrettGrafik.getInstance().drawPlayerNames(PlayerManager.getInstance().getPlayerList());

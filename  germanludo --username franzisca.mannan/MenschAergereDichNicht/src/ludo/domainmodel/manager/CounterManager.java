@@ -58,6 +58,7 @@ public class CounterManager {
 			// The counter is not present on his owners GameBoard - do nothing
 		}
 		counter.setCurrentLocation(counter.getStartingZoneLocation());
+		counter.setActive(false);
 		SpielbrettGrafik.getInstance().zeichneSpielfigur(counter);
 	}
 
@@ -79,9 +80,10 @@ public class CounterManager {
 	 */
 	public void placeCounterOnStartField(Counter counter)
 			throws CounterPositionNotFoundException,
-			GameFieldIsOccupiedException, GameBoardNotFoundException {
+			GameFieldIsOccupiedException, GameBoardNotFoundException 
+	{
 		Collision collision = GameBoardManager.getInstance()
-				.collisionDetection(counter);
+				.collisionDetection(counter, 0);
 
 		if (collision != null) {
 			// Did we collide with a counter of our own team?
@@ -102,7 +104,8 @@ public class CounterManager {
 		// Update the location of our current counter
 		counter.setCurrentLocation(counter.getOwningPlayer()
 				.getStartFieldLocation());
-		GameBoardManager.getInstance().placeCounterOnGameField(counter, 1);
+		GameBoardManager.getInstance().placeCounterOnGameField(counter, 0);
+		counter.setActive(true);
 	}
 
 	/**
@@ -127,7 +130,13 @@ public class CounterManager {
 			return;
 			
 		} else {
-			Collision collision = GameBoardManager.getInstance().collisionDetection(counterToMove);
+			//TODO collision detected with current field instead of future field
+			Collision collision = GameBoardManager.getInstance()
+					.collisionDetection(
+							counterToMove,
+							GameBoardManager.getInstance().getCounterPosition(
+									counterToMove).getFieldNumber()
+									+ diceValue);
 
 			if(collision != null)
 			{
@@ -154,13 +163,16 @@ public class CounterManager {
 					.getInstance().getCounterPosition(counterToMove)
 					.getFieldNumber(), counterToMove.getCurrentLocation());
 			
-			//Remove counter from his current GameField
-			GameBoardManager.getInstance().getCounterPosition(counterToMove).setIsOccupiedBy(null);	
-			
 			// Update the location of our current counter
 			counterToMove.setCurrentLocation(newLocation);
-			GameBoardManager.getInstance().placeCounterOnGameField(counterToMove, 1);				
+			GameBoardManager.getInstance().placeCounterOnGameField(
+					counterToMove,
+					GameBoardManager.getInstance().getCounterPosition(
+							counterToMove).getFieldNumber()
+							+ diceValue);							
 			
+			//Remove counter from his current GameField
+			GameBoardManager.getInstance().getCounterPosition(counterToMove).setIsOccupiedBy(null);				
 		}	
 	}
 
@@ -170,35 +182,34 @@ public class CounterManager {
 	 */
 	public Point calculateNewLocation (int diceValue, GameBoard board, int fieldNumber, Point currentLocation)
 	{
-		//Determine current GameField
-		GameField currentField = board.getGameFieldList().get(fieldNumber);
 
-		if(diceValue > 0)
-		{			
+		while(diceValue > 0)
+		{
+			//Determine current GameField
+			GameField currentField = board.getGameFieldList().get(fieldNumber);
+			
 			if(currentField.getDirectionToNextField() == Bewegungsrichtung.LINKS)
 			{
-				calculateNewLocation(--diceValue, board, ++fieldNumber,
-						new Point((int) currentLocation.getX() - 60,
-								(int) currentLocation.getY()));
+						currentLocation = new Point((int) currentLocation.getX() - 60,
+						(int) currentLocation.getY());
 			}
 			else if(currentField.getDirectionToNextField() == Bewegungsrichtung.RECHTS)
 			{
-				calculateNewLocation(--diceValue, board, ++fieldNumber,
-						new Point((int) currentLocation.getX() + 60,
-								(int) currentLocation.getY()));
+				currentLocation = new Point((int) currentLocation.getX() + 60,
+						(int) currentLocation.getY());
 			}
 			else if(currentField.getDirectionToNextField() == Bewegungsrichtung.OBEN)
 			{
-				calculateNewLocation(--diceValue, board, ++fieldNumber,
-						new Point((int) currentLocation.getX(),
-								(int) currentLocation.getY() - 60));
+				currentLocation = new Point((int) currentLocation.getX(),
+						(int) currentLocation.getY() - 60);
 			}
 			else if(currentField.getDirectionToNextField() == Bewegungsrichtung.UNTEN)
 			{
-				calculateNewLocation(--diceValue, board, ++fieldNumber,
-						new Point((int) currentLocation.getX(),
-								(int) currentLocation.getY() + 60));
+				currentLocation = new Point((int) currentLocation.getX(),
+						(int) currentLocation.getY() + 60);
 			}			
+			--diceValue;
+			++fieldNumber;
 		}
 		return currentLocation;			
 	}	

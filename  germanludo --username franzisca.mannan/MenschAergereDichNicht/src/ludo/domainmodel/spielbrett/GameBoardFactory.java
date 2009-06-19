@@ -12,7 +12,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class GameBoardFactory {
 
-	public static GameBoard createGameBoard(Color color)
+	public static GameBoard createGameBoard(SpielerFarbe color)
 	{
 		GameBoard gameBoard = new GameBoard();
 		
@@ -29,7 +29,7 @@ public class GameBoardFactory {
 	 * @param gameBoard
 	 * @param color
 	 */
-	private static void configure(GameBoard gameBoard, Color color) 
+	private static void configure(GameBoard gameBoard, SpielerFarbe color) 
 	{
 		/*
 		 * The list index starts from zero. We start counting from Zero - so
@@ -43,11 +43,11 @@ public class GameBoardFactory {
 			{
 				if(i == 0)
 					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.UNTEN));					
-				else if(i  > 39 && i < 43)
+				else if(i  > 39 && i < 44)
 					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.UNTEN));					
-				else if( ( (i > 0) && (i < 3) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
+				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.UNTEN));					
-				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 39) )
+				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 38) )
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.RECHTS));					
 				else if( ( (i > 19) && (i < 24) ) || ( (i > 27) && (i < 30) ) ||  ( (i > 33) && (i < 38) ) )
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.OBEN));					
@@ -59,9 +59,9 @@ public class GameBoardFactory {
 					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.LINKS));					
 				else if(i  > 39 && i < 43)
 					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.LINKS));					
-				else if( ( (i > 0) && (i < 3) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
+				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.LINKS));					
-				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 39) )
+				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 38) )
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.UNTEN));					
 				else if( ( (i > 19) && (i < 24) ) || ( (i > 27) && (i < 30) ) ||  ( (i > 33) && (i < 38) ) )
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.RECHTS));					
@@ -73,9 +73,9 @@ public class GameBoardFactory {
 					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.OBEN));					
 				else if(i  > 39 && i < 43)
 					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.OBEN));					
-				else if( ( (i > 0) && (i < 3) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
+				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.OBEN));					
-				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 39) )
+				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 38) )
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.LINKS));					
 				else if( ( (i > 19) && (i < 24) ) || ( (i > 27) && (i < 30) ) ||  ( (i > 33) && (i < 38) ) )
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.UNTEN));					
@@ -87,9 +87,9 @@ public class GameBoardFactory {
 					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.RECHTS));					
 				else if(i  > 39 && i < 43)
 					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.RECHTS));					
-				else if( ( (i > 0) && (i < 3) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
+				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.RECHTS));					
-				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 39) )
+				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 38) )
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.OBEN));					
 				else if( ( (i > 19) && (i < 24) ) || ( (i > 27) && (i < 30) ) ||  ( (i > 33) && (i < 38) ) )
 					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.LINKS));					

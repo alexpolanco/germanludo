@@ -85,6 +85,7 @@ public class Counter {
 		return isActive;
 	}
 
+	//TODO never used which is wrongs
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}	
