@@ -72,25 +72,34 @@ public class GameManager {
 	public void initializePlayers(String redName, String blueName, String yellowName, String greenName)
 	{
 		try {
-			PlayerManager.getInstance().addNewPlayer(redName, SpielerFarbe.ROT);
-			PlayerManager.getInstance().addNewPlayer(blueName, SpielerFarbe.BLAU);
-			PlayerManager.getInstance().addNewPlayer(yellowName, SpielerFarbe.GELB);
-			PlayerManager.getInstance().addNewPlayer(greenName, SpielerFarbe.GRUEN);
-			
-			//Draw player names
-			SpielbrettGrafik.getInstance().drawPlayerNames(PlayerManager.getInstance().getPlayerList());
-			//Draw counters of players
-			for (Player player : PlayerManager.getInstance().getPlayerList())
-			{
-				for (Counter counter : player.getCounters())
-				{
-					SpielbrettGrafik.getInstance().zeichneSpielfigur(counter);					
-				}
-			}
+			if(!redName.equals(""))
+				PlayerManager.getInstance().addNewPlayer(redName, SpielerFarbe.ROT);
+			if(!blueName.equals(""))
+				PlayerManager.getInstance().addNewPlayer(blueName, SpielerFarbe.BLAU);
+			if(!yellowName.equals(""))
+				PlayerManager.getInstance().addNewPlayer(yellowName, SpielerFarbe.GELB);
+			if(!greenName.equals(""))				
+				PlayerManager.getInstance().addNewPlayer(greenName, SpielerFarbe.GRUEN);			
+	
+			drawPlayerNamesAndCounters();
 			
 		} catch (InvalidColorException e) {
 			//TODO log statement required
 			SpielbrettGrafik.getInstance().displayStatusMessage("Error during Game initialization - invalid color");
 		}
+	}
+	
+	private void drawPlayerNamesAndCounters()
+	{
+		//Draw player names
+		SpielbrettGrafik.getInstance().drawPlayerNames(PlayerManager.getInstance().getPlayerList());
+		//Draw counters of players
+		for (Player player : PlayerManager.getInstance().getPlayerList())
+		{
+			for (Counter counter : player.getCounters())
+			{
+				SpielbrettGrafik.getInstance().drawCounters();					
+			}
+		}		
 	}
 }

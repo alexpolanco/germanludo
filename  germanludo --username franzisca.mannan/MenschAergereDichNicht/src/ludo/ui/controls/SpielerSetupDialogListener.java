@@ -26,7 +26,7 @@ public class SpielerSetupDialogListener implements ActionListener{
 					parent.getBlauerSpielerName(),
 					parent.getGelberSpielerName(),
 					parent.getGruenerSpielerName());
-
+			
 			//Hide the dialog
 			parent.setVisible(false);
 			parent.dispose();			

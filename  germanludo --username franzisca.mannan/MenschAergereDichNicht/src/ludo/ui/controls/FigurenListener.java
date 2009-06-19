@@ -44,7 +44,7 @@ public class FigurenListener implements MouseListener{
 							&& !GameBoardManager.getInstance().getIsCounterOnGameBoard(counter))
 					{
 						// Place the counter on the start field
-						CounterManager.getInstance().placeCounterOnStartField(counter);
+						CounterManager.getInstance().moveCounterToStartField(counter);
 					}
 					// Check whether the counter is elsewhere on the GameBoard
 					else if (GameBoardManager.getInstance().getIsCounterOnGameBoard(counter))

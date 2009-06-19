@@ -32,6 +32,7 @@ import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.Player;
 import ludo.domainmodel.SpielerFarbe;
+import ludo.domainmodel.manager.PlayerManager;
 import ludo.ui.controls.FigurenListener;
 import ludo.ui.controls.MenuItemListener;
 import ludo.ui.controls.WuerfelListener;
@@ -100,17 +101,19 @@ public class SpielbrettGrafik {
 	}
 
 	/**
-	 * Updates the location of a {@link Counter} and draws it accordingly on the
-	 * graphical {@link GameBoard}.
+	 * Updates the location of all {@link Counter}s and paints them accordingly
+	 * on the graphical {@link GameBoard}.
 	 */
-	public void zeichneSpielfigur(Counter counter)
+	public void drawCounters()
 	{		
-		background.remove(counter.getPlayerImage());
-		counter.getPlayerImage().setBounds(
-				((int) counter.getCurrentLocation().getX()),
-				((int) counter.getCurrentLocation().getY()), 50, 50);		
-		background.add(counter.getPlayerImage());
-				
+		for (Counter counter : PlayerManager.getInstance().getCurrentPlayer().getCounters())
+		{
+			background.remove(counter.getPlayerImage());
+			counter.getPlayerImage().setBounds(
+					((int) counter.getCurrentLocation().getX()),
+					((int) counter.getCurrentLocation().getY()), 50, 50);		
+			background.add(counter.getPlayerImage());			
+		}				
 		refresh();
 	}
 	
