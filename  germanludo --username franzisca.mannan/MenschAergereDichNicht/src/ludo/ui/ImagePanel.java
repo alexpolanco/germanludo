@@ -3,18 +3,13 @@ import java.awt.*;
 
 
 /** 
- * JPanel Klasse, welches in Image darstellt.
- *
+ * JPanel class which has an {@link Image} as a background.
  */
 public class ImagePanel extends javax.swing.JPanel 
 {	
 		private String pfadOfImage = null;
 		private Image image = null;
 		
-	/**
-	 * ImagePanel Construktor. Es wird der Pfad des Images, welches angezeigt werden soll
-	 * benötigt
-	 */
 	public ImagePanel(String imagePfad) {
 		super();
 	

@@ -30,19 +30,18 @@ public class FigurenListener implements MouseListener{
 		{
 			for (Counter counter : PlayerManager.getInstance().getCurrentPlayer().getCounters())
 			{
+				System.out.println("Current distance between Counter and point: " + pointOfClick.distance(counter.getCurrentLocation()));
 				/*
 				 * Does any of the counter's location match the point on which the
 				 * player clicked?
 				 */
-				if(counter.getCurrentLocation() == pointOfClick)
+				if(pointOfClick.distance(counter.getCurrentLocation()) < 5)
 				{
 					// Check whether a 6 was diced and whether the counter is in the
 					// starting zone
 					if (Integer.valueOf(SpielbrettGrafik.getInstance()
 							.getDiceValue()) == 6
-							&& GameBoardManager.getInstance().getCounterPosition(
-									counter).getFieldType().equals(
-									FeldTyp.WARTEFELD))
+							&& !GameBoardManager.getInstance().getIsCounterOnGameBoard(counter))
 					{
 						// Place the counter on the start field
 						CounterManager.getInstance().placeCounterOnStartField(counter);
@@ -64,8 +63,6 @@ public class FigurenListener implements MouseListener{
 					else
 					{
 						SpielbrettGrafik.getInstance().displayStatusMessage("Der Spieler darf noch einmal würfeln");
-						//TODO remove once status bar works
-						SpielbrettGrafik.getInstance().setDiceValue(counter.getCounterColor().toString());
 					}
 					
 				}
