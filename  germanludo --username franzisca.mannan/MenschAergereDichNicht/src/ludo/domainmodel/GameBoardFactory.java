@@ -8,7 +8,7 @@ import java.awt.Color;
  */
 public class GameBoardFactory {
 
-	public static GameBoard createGameBoard(SpielerFarbe color)
+	public static GameBoard createGameBoard(PlayerColor color)
 	{
 		GameBoard gameBoard = new GameBoard();
 		
@@ -25,7 +25,7 @@ public class GameBoardFactory {
 	 * @param gameBoard
 	 * @param color
 	 */
-	private static void configure(GameBoard gameBoard, SpielerFarbe color) 
+	private static void configure(GameBoard gameBoard, PlayerColor color) 
 	{
 		/*
 		 * The list index starts from zero. We start counting from Zero - so
@@ -35,62 +35,62 @@ public class GameBoardFactory {
 		for(int i = 0; i < 44; i++)
 		{
 			//Configuration for the red GameBoard	
-			if(color.equals(SpielerFarbe.ROT))
+			if(color.equals(PlayerColor.RED))
 			{
 				if(i == 0)
-					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.UNTEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.STARTFIELD, MovementDirection.BELOW));					
 				else if(i  > 39 && i < 44)
-					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.UNTEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.HOMEFIELD, MovementDirection.BELOW));					
 				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.UNTEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.BELOW));					
 				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 38) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.RECHTS));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.RIGHT));					
 				else if( ( (i > 19) && (i < 24) ) || ( (i > 27) && (i < 30) ) ||  ( (i > 33) && (i < 38) ) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.OBEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.ABOVE));					
 				else if( ( (i > 9) && (i < 14) ) || ( (i > 23) && (i < 28) ) ||  ( (i > 17) && (i < 20) ) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.LINKS));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.LEFT));					
 				//Configuration for the blue GameBoard	
-			} else if (color.equals(SpielerFarbe.BLAU)) {
+			} else if (color.equals(PlayerColor.BLUE)) {
 				if(i == 0)
-					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.LINKS));					
+					gameBoard.addGameField(new GameField(i, FieldType.STARTFIELD, MovementDirection.LEFT));					
 				else if(i  > 39 && i < 44)
-					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.LINKS));					
+					gameBoard.addGameField(new GameField(i, FieldType.HOMEFIELD, MovementDirection.LEFT));					
 				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.LINKS));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.LEFT));					
 				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 38) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.UNTEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.BELOW));					
 				else if( ( (i > 19) && (i < 24) ) || ( (i > 27) && (i < 30) ) ||  ( (i > 33) && (i < 38) ) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.RECHTS));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.RIGHT));					
 				else if( ( (i > 9) && (i < 14) ) || ( (i > 23) && (i < 28) ) ||  ( (i > 17) && (i < 20) ) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.OBEN));			
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.ABOVE));			
 			//Configuration for the yellow GameBoard	
-			} else if (color.equals(SpielerFarbe.GELB)) {
+			} else if (color.equals(PlayerColor.YELLOW)) {
 				if(i == 0)
-					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.OBEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.STARTFIELD, MovementDirection.ABOVE));					
 				else if(i  > 39 && i < 44)
-					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.OBEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.HOMEFIELD, MovementDirection.ABOVE));					
 				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.OBEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.ABOVE));					
 				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 38) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.LINKS));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.LEFT));					
 				else if( ( (i > 19) && (i < 24) ) || ( (i > 27) && (i < 30) ) ||  ( (i > 33) && (i < 38) ) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.UNTEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.BELOW));					
 				else if( ( (i > 9) && (i < 14) ) || ( (i > 23) && (i < 28) ) ||  ( (i > 17) && (i < 20) ) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.RECHTS));						
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.RIGHT));						
 				//Configuration for the green GameBoard	
-			} else if (color.equals(SpielerFarbe.GRUEN)) {
+			} else if (color.equals(PlayerColor.GREEN)) {
 				if(i == 0)
-					gameBoard.addGameField(new GameField(i, FeldTyp.STARTFELD, Bewegungsrichtung.RECHTS));					
+					gameBoard.addGameField(new GameField(i, FieldType.STARTFIELD, MovementDirection.RIGHT));					
 				else if(i  > 39 && i < 44)
-					gameBoard.addGameField(new GameField(i, FeldTyp.ZIELFELD, Bewegungsrichtung.RECHTS));					
+					gameBoard.addGameField(new GameField(i, FieldType.HOMEFIELD, MovementDirection.RIGHT));					
 				else if( ( (i > 0) && (i < 4) ) || ( (i > 13) && (i< 18) ) || (i == 39)  || ( (i > 7) && ( i < 10) ))
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.RECHTS));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.RIGHT));					
 				else if( ( (i > 3) && (i < 8) ) || ( (i > 29) && (i < 34) ) ||  (i == 38) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.OBEN));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.ABOVE));					
 				else if( ( (i > 19) && (i < 24) ) || ( (i > 27) && (i < 30) ) ||  ( (i > 33) && (i < 38) ) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.LINKS));					
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.LEFT));					
 				else if( ( (i > 9) && (i < 14) ) || ( (i > 23) && (i < 28) ) ||  ( (i > 17) && (i < 20) ) )
-					gameBoard.addGameField(new GameField(i, FeldTyp.LAUFBAHNFELD, Bewegungsrichtung.UNTEN));									
+					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.BELOW));									
 			}
 		}
 	}

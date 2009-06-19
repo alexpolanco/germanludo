@@ -8,12 +8,12 @@ import java.awt.Point;
  */
 public class HumanPlayer extends Player {
 
-	public HumanPlayer(String name, SpielerFarbe color, Point start,
+	public HumanPlayer(String name, PlayerColor color, Point start,
 			Point medal, Point nameLocation) {
 		super(name, color, start, medal, nameLocation);
 	}
 
-	public HumanPlayer(String name, SpielerFarbe color) {
+	public HumanPlayer(String name, PlayerColor color) {
 		super(name, color);
 	}
 

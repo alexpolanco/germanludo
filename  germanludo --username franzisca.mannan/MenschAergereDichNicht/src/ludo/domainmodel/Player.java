@@ -15,7 +15,7 @@ public abstract class Player {
 	//The name of the player
 	private String playerName;
 	//The color which has been assigned to the player
-	private SpielerFarbe playerColor;
+	private PlayerColor playerColor;
 	//The GameBoard on which the counters of the player move
 	private GameBoard gameBoard;
 	
@@ -45,7 +45,7 @@ public abstract class Player {
 	 * @param medal coordinates for the player medal, which is displayed once he finishes the game
 	 * @param start coordinates for the start field for the current {@link Player}
 	 */
-	public Player(String name, SpielerFarbe color, Point start, Point medal, Point nameLocation)
+	public Player(String name, PlayerColor color, Point start, Point medal, Point nameLocation)
 	{
 		playerName = name;
 		playerColor = color;
@@ -55,7 +55,7 @@ public abstract class Player {
 		startFieldLocation = start;
 	}
 
-	public Player(String name, SpielerFarbe color)
+	public Player(String name, PlayerColor color)
 	{
 		playerName = name;
 		playerColor = color;
@@ -110,7 +110,7 @@ public abstract class Player {
 		return playerName;
 	}
 
-	public SpielerFarbe getPlayerColor() {
+	public PlayerColor getPlayerColor() {
 		return playerColor;
 	}
 

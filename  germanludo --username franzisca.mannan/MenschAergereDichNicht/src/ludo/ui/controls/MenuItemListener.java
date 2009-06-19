@@ -3,7 +3,7 @@ package ludo.ui.controls;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ludo.ui.SpielbrettGrafik;
+import ludo.ui.GameBoardUI;
 
 public class MenuItemListener implements ActionListener{
 
@@ -13,7 +13,7 @@ public class MenuItemListener implements ActionListener{
 		if(cmd.equalsIgnoreCase("Beenden"))
 		{
 			System.out.println("Beende Spiel via Menü");
-			SpielbrettGrafik.getInstance().beenden();
+			GameBoardUI.getInstance().endGame();
 		}
 	}
 

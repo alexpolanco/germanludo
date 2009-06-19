@@ -5,7 +5,7 @@ import java.awt.Point;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import ludo.ui.controls.FigurenListener;
+import ludo.ui.controls.CounterListener;
 
 
 /**
@@ -23,7 +23,7 @@ public class Counter {
 	private Player owningPlayer;
 	
 	//Color of this counter
-	private SpielerFarbe counterColor;
+	private PlayerColor counterColor;
 
 	//The actual image of our player, wrapped in a JLabel
 	private JLabel playerImage;
@@ -39,7 +39,7 @@ public class Counter {
 	 * @param color
 	 * @param icon
 	 */
-	public Counter(Point location, Player owner, SpielerFarbe color, ImageIcon icon)
+	public Counter(Point location, Player owner, PlayerColor color, ImageIcon icon)
 	{
 		owningPlayer = owner;		
 		counterColor = color;
@@ -47,7 +47,7 @@ public class Counter {
 		
 		playerImage = new JLabel(icon);
 		//Add a listener so we can react when a user clicks on a player
-		playerImage.addMouseListener(new FigurenListener());
+		playerImage.addMouseListener(new CounterListener());
 	}	
 
 	public Player getOwningPlayer() {
@@ -67,7 +67,7 @@ public class Counter {
 		return startingZoneLocation;
 	}
 
-	public SpielerFarbe getCounterColor() {
+	public PlayerColor getCounterColor() {
 		return counterColor;
 	}
 

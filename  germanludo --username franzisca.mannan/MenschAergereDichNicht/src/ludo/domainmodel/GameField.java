@@ -12,16 +12,16 @@ public class GameField {
 	private int fieldNumber;
 
 	//The field type is either home, starting zone or in game
-	private FeldTyp fieldType;
+	private FieldType fieldType;
 		
 	// The direction in which the following GameField lies
-	private Bewegungsrichtung directionToNextField;
+	private MovementDirection directionToNextField;
 	
 	//The counter that is currently occupying the GameField
 	private Counter isOccupiedBy = null;
 						
 	
-	public GameField(int number, FeldTyp type, Bewegungsrichtung direction) {
+	public GameField(int number, FieldType type, MovementDirection direction) {
 		super();
 		fieldNumber = number;
 		fieldType = type;
@@ -40,11 +40,11 @@ public class GameField {
 		return fieldNumber;
 	}
 
-	public FeldTyp getFieldType() {
+	public FieldType getFieldType() {
 		return fieldType;
 	}
 
-	public Bewegungsrichtung getDirectionToNextField() {
+	public MovementDirection getDirectionToNextField() {
 		return directionToNextField;
 	}
 
