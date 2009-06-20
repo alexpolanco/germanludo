@@ -1,11 +1,12 @@
 package ludo.domainmodel.manager;
 
+import java.awt.Color;
+
 import javax.swing.JDialog;
 
 import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoard;
 import ludo.domainmodel.Player;
-import ludo.domainmodel.PlayerColor;
 import ludo.exceptions.InvalidColorException;
 import ludo.ui.GameBoardUI;
 import ludo.ui.PlayerSetupDialog;
@@ -66,13 +67,13 @@ public class GameManager {
 	{
 		try {
 			if(!redName.equals(""))
-				PlayerManager.getInstance().addNewPlayer(redName, PlayerColor.RED);
+				PlayerManager.getInstance().addNewPlayer(redName, Color.RED);
 			if(!blueName.equals(""))
-				PlayerManager.getInstance().addNewPlayer(blueName, PlayerColor.BLUE);
+				PlayerManager.getInstance().addNewPlayer(blueName, Color.BLUE);
 			if(!yellowName.equals(""))
-				PlayerManager.getInstance().addNewPlayer(yellowName, PlayerColor.YELLOW);
+				PlayerManager.getInstance().addNewPlayer(yellowName, Color.YELLOW);
 			if(!greenName.equals(""))				
-				PlayerManager.getInstance().addNewPlayer(greenName, PlayerColor.GREEN);			
+				PlayerManager.getInstance().addNewPlayer(greenName, Color.GREEN);			
 	
 			drawPlayerNamesAndCounters();
 			

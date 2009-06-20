@@ -8,7 +8,7 @@ import java.awt.Color;
  */
 public class GameBoardFactory {
 
-	public static GameBoard createGameBoard(PlayerColor color)
+	public static GameBoard createGameBoard(Color color)
 	{
 		GameBoard gameBoard = new GameBoard();
 		
@@ -25,7 +25,7 @@ public class GameBoardFactory {
 	 * @param gameBoard
 	 * @param color
 	 */
-	private static void configure(GameBoard gameBoard, PlayerColor color) 
+	private static void configure(GameBoard gameBoard, Color color) 
 	{
 		/*
 		 * The list index starts from zero. We start counting from Zero - so
@@ -35,7 +35,7 @@ public class GameBoardFactory {
 		for(int i = 0; i < 44; i++)
 		{
 			//Configuration for the red GameBoard	
-			if(color.equals(PlayerColor.RED))
+			if(color.equals(Color.RED))
 			{
 				if(i == 0)
 					gameBoard.addGameField(new GameField(i, FieldType.STARTFIELD, MovementDirection.BELOW));					
@@ -50,7 +50,7 @@ public class GameBoardFactory {
 				else if( ( (i > 9) && (i < 14) ) || ( (i > 23) && (i < 28) ) ||  ( (i > 17) && (i < 20) ) )
 					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.LEFT));					
 				//Configuration for the blue GameBoard	
-			} else if (color.equals(PlayerColor.BLUE)) {
+			} else if (color.equals(Color.BLUE)) {
 				if(i == 0)
 					gameBoard.addGameField(new GameField(i, FieldType.STARTFIELD, MovementDirection.LEFT));					
 				else if(i  > 39 && i < 44)
@@ -64,7 +64,7 @@ public class GameBoardFactory {
 				else if( ( (i > 9) && (i < 14) ) || ( (i > 23) && (i < 28) ) ||  ( (i > 17) && (i < 20) ) )
 					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.ABOVE));			
 			//Configuration for the yellow GameBoard	
-			} else if (color.equals(PlayerColor.YELLOW)) {
+			} else if (color.equals(Color.YELLOW)) {
 				if(i == 0)
 					gameBoard.addGameField(new GameField(i, FieldType.STARTFIELD, MovementDirection.ABOVE));					
 				else if(i  > 39 && i < 44)
@@ -78,7 +78,7 @@ public class GameBoardFactory {
 				else if( ( (i > 9) && (i < 14) ) || ( (i > 23) && (i < 28) ) ||  ( (i > 17) && (i < 20) ) )
 					gameBoard.addGameField(new GameField(i, FieldType.INGAMEFIELD, MovementDirection.RIGHT));						
 				//Configuration for the green GameBoard	
-			} else if (color.equals(PlayerColor.GREEN)) {
+			} else if (color.equals(Color.GREEN)) {
 				if(i == 0)
 					gameBoard.addGameField(new GameField(i, FieldType.STARTFIELD, MovementDirection.RIGHT));					
 				else if(i  > 39 && i < 44)

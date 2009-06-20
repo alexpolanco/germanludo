@@ -1,5 +1,6 @@
 package ludo.domainmodel.manager;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.util.LinkedList;
 
@@ -11,7 +12,6 @@ import ludo.domainmodel.Counter;
 import ludo.domainmodel.GameBoardFactory;
 import ludo.domainmodel.HumanPlayer;
 import ludo.domainmodel.Player;
-import ludo.domainmodel.PlayerColor;
 import ludo.exceptions.CounterPositionNotFoundException;
 import ludo.exceptions.InvalidColorException;
 import ludo.exceptions.NoMoreMedalsException;
@@ -71,6 +71,7 @@ public class PlayerManager {
 	 */
 	public void switchActivePlayer() {
 		playerList.add(playerList.pollFirst());
+		GameBoardUI.getInstance().changeDiceColor(getCurrentPlayer().getPlayerColor());
 		GameBoardUI.getInstance().displayStatusMessage("@Spieler " + playerList.peekFirst().getPlayerName() +  " : Sie sind an der Reihe");
 	}
 
@@ -112,12 +113,12 @@ public class PlayerManager {
 	 * and also adds and initializes all four {@link Counter}s to it.
 	 * @throws InvalidColorException 
 	 */
-	public void addNewPlayer(String name, PlayerColor color) throws InvalidColorException {
+	public void addNewPlayer(String name, Color color) throws InvalidColorException {
 		Player player = new HumanPlayer(name, color);
 		player.setGameBoard(GameBoardFactory.createGameBoard(player.getPlayerColor()));
 		
 		//Initialize red Player
-		if(color.equals(PlayerColor.RED)) {
+		if(color.equals(Color.RED)) {
 			log.debug("Initializing red player named " + name + " with the color " + color.toString());
 			player.setStartFieldLocation(new Point(365, 15));
 			player.setPlayerNameLocation(new Point(475, 30));
@@ -127,7 +128,7 @@ public class PlayerManager {
 			counters.add(new Counter(new Point(470, 70), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
 			counters.add(new Counter(new Point(470, 130), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerRot.png"))));
 			player.setCounters(counters);
-		} else if(color.equals(PlayerColor.BLUE)) {
+		} else if(color.equals(Color.BLUE)) {
 			log.debug("Initializing red player named " + name + " with the color " + color.toString());
 			player.setStartFieldLocation(new Point(605, 375));
 			player.setPlayerNameLocation(new Point(475, 505));
@@ -137,7 +138,7 @@ public class PlayerManager {
 			counters.add(new Counter(new Point(475, 550), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerBlau.png"))));
 			counters.add(new Counter(new Point(475, 620), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerBlau.png"))));
 			player.setCounters(counters);
-		} else if(color.equals(PlayerColor.YELLOW)) {
+		} else if(color.equals(Color.YELLOW)) {
 			log.debug("Initializing red player named " + name + " with the color " + color.toString());
 			player.setStartFieldLocation(new Point(245, 620));
 			player.setPlayerNameLocation(new Point(30, 505));
@@ -147,7 +148,7 @@ public class PlayerManager {
 			counters.add(new Counter(new Point(120, 550), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
 			counters.add(new Counter(new Point(50, 615), player, player.getPlayerColor(), new ImageIcon(  this.getClass().getResource("spielerGelb.png"))));
 			player.setCounters(counters);
-		} else if(color.equals(PlayerColor.GREEN)) {
+		} else if(color.equals(Color.GREEN)) {
 			log.debug("Initializing red player named " + name + " with the color " + color.toString());
 			player.setStartFieldLocation(new Point(5, 260));
 			player.setPlayerNameLocation(new Point(30, 30));

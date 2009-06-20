@@ -12,6 +12,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
 
@@ -51,6 +52,7 @@ public class GameBoardUI {
 	public void dispplayGameBoard()
 	{
 		frame = new JFrame("Mensch ärgere dich nicht");
+		frame.setResizable(false);
 		frame.setMinimumSize(new Dimension(680, 750));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -80,8 +82,16 @@ public class GameBoardUI {
 		statusBar = new JLabel("Willkommen bei Mensch aergere dich nicht");
 		statusBar.setBackground(Color.GRAY);
 		statusBar.setBackground(Color.red);
-		statusBar.setBounds(1, 680, 680, 25);
+		statusBar.setBounds(1, 1, 500, 25);
 		background.add(statusBar);
+		
+		// Add Skip Button - allows the player to skip his turn
+		JButton skipButton = new JButton("Aussetzen");
+		skipButton.setActionCommand(skipButton.getText());
+		skipButton.addActionListener(new MenuItemListener());
+		skipButton.setBounds(570, 1, 100, 30);
+		background.add(skipButton);
+		
 		
 		//Add all components to frame
 		frame.getContentPane().add(background);
@@ -184,5 +194,10 @@ public class GameBoardUI {
 				.getMedalLocation().getY(), 100, 100);
 		background.add(medal);		
 		refresh();
+	}
+	
+	public void changeDiceColor(Color color)
+	{
+		getDice().setBorder(new LineBorder(color, 10));
 	}
 }
