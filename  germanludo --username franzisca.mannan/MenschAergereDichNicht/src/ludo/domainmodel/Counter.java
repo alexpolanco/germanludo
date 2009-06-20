@@ -1,5 +1,6 @@
 package ludo.domainmodel;
 
+import java.awt.Color;
 import java.awt.Point;
 
 import javax.swing.ImageIcon;
@@ -23,7 +24,7 @@ public class Counter {
 	private Player owningPlayer;
 	
 	//Color of this counter
-	private PlayerColor counterColor;
+	private Color counterColor;
 
 	//The actual image of our player, wrapped in a JLabel
 	private JLabel playerImage;
@@ -39,7 +40,7 @@ public class Counter {
 	 * @param color
 	 * @param icon
 	 */
-	public Counter(Point location, Player owner, PlayerColor color, ImageIcon icon)
+	public Counter(Point location, Player owner, Color color, ImageIcon icon)
 	{
 		owningPlayer = owner;		
 		counterColor = color;
@@ -67,7 +68,7 @@ public class Counter {
 		return startingZoneLocation;
 	}
 
-	public PlayerColor getCounterColor() {
+	public Color getCounterColor() {
 		return counterColor;
 	}
 
