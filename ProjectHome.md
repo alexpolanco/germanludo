@@ -1,0 +1,1 @@
+This game implements the popular board game "ludo" also known as "Mensch ärgere dich nicht". It allows up to 4 players to compete with each other.
